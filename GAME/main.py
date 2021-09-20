@@ -24,11 +24,11 @@ with open("settings.txt","r") as file:
     for i in file:
         if i.startswith("#"):
             file.pop(file.index(i))
-        if i.startswith("full"):
+        if i.startswith("FullScreen"):
             full = bool(int(i.split(":")[1]))
-        if i.startswith("size_x"):
+        if i.startswith("screenSize_x"):
             size_x = int(i.split(":")[1])
-        if i.startswith("size_y"):
+        if i.startswith("screenSize_y"):
             size_y = int(i.split(":")[1])
 
     size = (size_x,size_y)
