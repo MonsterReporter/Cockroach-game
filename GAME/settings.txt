@@ -8,6 +8,6 @@ screenSize_y :480
 ##VirusChara - Tried making it more easily readable.
 
 #catornot settings
-#full :1
-#size_x :1920
-#size_y :1080
+#FullScreen :1
+#screenSize_x :1920
+#screenSize_y :1080
