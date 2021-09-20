@@ -1,9 +1,12 @@
-full :0
-size_x :640
-size_y :480
-#the Full setting makes the your game fullscreen.
-#the size setting defines the screen size.
-#no spaces after the :.
+FullScreen :0
+#Determines whether the game is fullscreen
+
+screenSize_x :640
+screenSize_y :480
+#Determines the screen's size
+#no spaces after the ":".
+##VirusChara - Tried making it more easily readable.
+
 #catornot settings
 #full :1
 #size_x :1920
