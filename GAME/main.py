@@ -46,11 +46,12 @@ pygame.display.set_caption("game")
 placeholder = pygame.image.load("placeholder.png")
 placeholder = pygame.transform.scale(placeholder,size)
 placeholder2 = pygame.image.load("placeholder2.png")
-placeholder2 = pygame.transform.scale(placeholder2,(int(30 / 640 * size_x),int( 60 / 480 * size_y)))
+placeholder2 = pygame.transform.scale(placeholder2,(int(30 / size_x * 1920),int( 60 / size_y * 1080)))
 
 #Sart stuff
 P = P(100,100,placeholder2)
 dt = 0
+font = pygame.font.SysFont("Arial", 24)
 
 running = True
 while running:
@@ -63,7 +64,7 @@ while running:
     screen.blit(placeholder,(0,0))
 
     #player
-    screen = P.update(screen,dt)
+    screen = P.update(screen,dt,font)
 
     pygame.display.update()
 
