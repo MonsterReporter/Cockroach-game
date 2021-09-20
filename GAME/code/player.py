@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+
 class player():
     BLUE = (0,0,225)
     def __init__(self,x,y,img):

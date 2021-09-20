@@ -1,4 +1,6 @@
 import sys
+import os
+sys.path.append(os.path.dirname"/code")
 import pygame
 from pygame.locals import *
 from pygame import mixer
@@ -43,9 +45,9 @@ with open("settings.txt","r") as file:
 pygame.display.set_caption("game")
 
 #import textures
-placeholder = pygame.image.load("placeholder.png")
+placeholder = pygame.image.load("textures/placeholder.png")
 placeholder = pygame.transform.scale(placeholder,size)
-placeholder2 = pygame.image.load("placeholder2.png")
+placeholder2 = pygame.image.load("textures/placeholder2.png")
 placeholder2 = pygame.transform.scale(placeholder2,(int(30 / size_x * 1920),int( 60 / size_y * 1080)))
 
 #Sart stuff
