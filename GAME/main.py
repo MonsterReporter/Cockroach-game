@@ -1,6 +1,7 @@
 import sys
 import os
-sys.path.append(os.path.dirname"/code")
+sys.path.append(os.path.join(os.getcwd(),"code"))
+
 import pygame
 from pygame.locals import *
 from pygame import mixer
