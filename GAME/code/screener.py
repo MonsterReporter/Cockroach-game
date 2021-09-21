@@ -43,5 +43,3 @@ def set_up_screen():
 
 def resize():
     pass
-
-# Adujuster = adujuster(size_x,size_y,full)

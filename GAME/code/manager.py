@@ -2,7 +2,7 @@ import pygame
 import sys
 
 
-from screener import adujuster, resize
+from screener import adujuster
 
 from player import Player
 
@@ -22,7 +22,7 @@ class Manager:
 
         #import textures
         # building = pygame.image.load('person1.png')
-        
+
 
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER)
