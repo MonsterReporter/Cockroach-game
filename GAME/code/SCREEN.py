@@ -1,3 +1,5 @@
+import pygame
+
 class adujuster():
     def __init__(self,size_x,size_y,full):
         self._size_x = size_x

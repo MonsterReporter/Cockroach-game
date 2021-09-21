@@ -2,7 +2,7 @@ import pygame
 import sys
 
 
-from screen_ import adujuster
+from SCREEN import adujuster
 
 from player import Player
 
