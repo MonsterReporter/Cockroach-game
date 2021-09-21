@@ -7,6 +7,10 @@ screenSize_y :480
 #no spaces after the ":".
 ##VirusChara - Tried making it more easily readable.
 
+#small screen size
+#screenSize_x :640
+#screenSize_y :480
+
 #catornot settings
 #FullScreen :1
 #screenSize_x :1920
