@@ -1,6 +1,8 @@
 import pygame
 import sys
 
+from screen_ import *
+
 from player import Player
 
 class Manager:
@@ -15,7 +17,12 @@ class Manager:
         self.screenstates = {"game": self.game_loop}
         self.screenstate = self.screenstates["game"]
 
+        #import textures
+
+
         self.player = Player(self.SCREEN, self.SCREEN_CENTER)
+
+        self.font = pygame.font.SysFont("Arial", 24)
 
     def game_loop(self):
         for event in pygame.event.get():
