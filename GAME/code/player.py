@@ -4,10 +4,14 @@ import math
 from surface import Surface
 
 class Player(Surface):
-    def __init__(self, display, position):
+    def __init__(self, display, position,Cavemen):
         super().__init__(display, position, (32))
         pygame.draw.polygon(self.original_surface, (255, 255, 255), ((16, 0), (32, 32), (16, 26), (0, 32)), width=2)
         self.update_surface()
+        #idk what is the size I guess 80,60 you can it change in the manager.
+
+        # self.Cavemen = Cavemen
+        # self.original_surface.blit(Cavemen["caveman down"],(0,0))
 
         self.velocity = pygame.Vector2(0, 0)
         self.speed = 0.3
