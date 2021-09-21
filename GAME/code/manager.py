@@ -1,6 +1,11 @@
 import pygame
 import sys
 
+<<<<<<< Updated upstream
+=======
+from screen_ import adujuster
+
+>>>>>>> Stashed changes
 from player import Player
 
 class Manager:
