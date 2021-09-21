@@ -1,24 +1,9 @@
-<<<<<<< Updated upstream
-import sys
-import os
-sys.path.append(os.path.join(os.getcwd(),"code")) 
-
-# icon
-# icon = pygame.image.load("none")
-# pygame.display.set_icon(icon)
-
-# # title
-# pygame.display.set_caption("game")
-
-
-=======
->>>>>>> Stashed changes
 def main():
+    import pygame
+    
     import sys
     import os
     sys.path.append(os.path.join(os.getcwd(),"code")) 
-    
-    import pygame
 
     # from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE
     from screen_ import *
