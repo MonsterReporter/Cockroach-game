@@ -2,7 +2,7 @@ import pygame
 import sys
 
 
-from SCREEN import adujuster
+from screener import adujuster, resize
 
 from player import Player
 
@@ -13,12 +13,16 @@ class Manager:
         self.SCREEN_HEIGHT = self.SCREEN.get_height()
         self.SCREEN_CENTER = (int(self.SCREEN_WIDTH / 2), int(self.SCREEN_HEIGHT / 2))
 
+        Adujuster = adujuster(self.SCREEN.get_width,self.SCREEN.get_height)
+
         self.CLOCK = clock
 
         self.screenstates = {"game": self.game_loop}
         self.screenstate = self.screenstates["game"]
 
         #import textures
+        # building = pygame.image.load('person1.png')
+        
 
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER)

@@ -4,7 +4,6 @@ class adujuster():
     def __init__(self,size_x,size_y,full):
         self._size_x = size_x
         self._size_y = size_y
-        self._full = full
 
     def get_size(self):
         return (self._size_x,self._size_y)
@@ -41,5 +40,8 @@ def set_up_screen():
             screen = pygame.display.set_mode(size)
 
     return screen
+
+def resize():
+    pass
 
 # Adujuster = adujuster(size_x,size_y,full)
