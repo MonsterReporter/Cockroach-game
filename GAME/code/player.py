@@ -1,36 +1,44 @@
 import pygame
-from pygame.locals import *
+import math
 
-class player():
-    BLUE = (0,0,225)
-    def __init__(self,x,y,img):
-        self.x = x
-        self.y = y
-        self.img = img
-        self.v = 0.5
+from surface import Surface
 
+class Player(Surface):
+    def __init__(self, display, position):
+        super().__init__(display, position, (32))
+        pygame.draw.polygon(self.original_surface, (255, 255, 255), ((16, 0), (32, 32), (16, 26), (0, 32)), width=2)
+        self.update_surface()
 
-    def update(self,screen,dt,font):
+        self.velocity = pygame.Vector2(0, 0)
+        self.speed = 0.3
+        self.direction = 0
+    
+    def rotate(self):
+        mx, my = pygame.mouse.get_pos()
+        self.direction = -math.degrees(math.atan2(my - self.position.y, mx - self.position.x))
+        self.surface = pygame.transform.rotate(self.original_surface, self.direction - 90)
 
-        screen.blit(self.img,(self.x,self.y))
-
+    def move(self):
+        self.direction = -math.radians(self.direction)
 
         keys = pygame.key.get_pressed()
+        if keys[pygame.K_w]:
+            self.velocity.x += math.cos(self.direction)
+            self.velocity.y += math.sin(self.direction)
+        if keys[pygame.K_a]:
+            self.velocity.x += math.cos(self.direction) - math.radians(90)
+        elif keys[pygame.K_d]:
+            self.velocity.x += math.cos(self.direction) + math.radians(90)
 
-        if keys[K_w]:
-            self.y -= self.v * dt
+        self.velocity /= 1.02
 
-        if keys[K_s]:
-            self.y += self.v * dt
+        if self.velocity.x > -0.3 and self.velocity.x < 0.3:
+            self.velocity.x = 0
+        if self.velocity.y > -0.3 and self.velocity.y < 0.3:
+            self.velocity.y = 0
 
-        if keys[K_d]:
-            self.x += self.v * dt
+        self.position += (self.velocity * self.speed)
 
-        if keys[K_a]:
-            self.x -= self.v * dt
-            
-
-        img = font.render(f"pos : {self.x} , {self.y}", True, self.BLUE)
-        screen.blit(img, (0, 0))
-
-        return screen
+    def update(self):
+        self.rotate()
+        self.move()

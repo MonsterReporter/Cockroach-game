@@ -32,8 +32,6 @@ class adujuster():
         #size is width, height
         return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
 
-<<<<<<< Updated upstream
-
 # Set up the window.
 with open("settings.txt","r") as file:
     file = list(file.read().split("\n"))
@@ -67,38 +65,12 @@ Adujuster = adujuster(size_x,size_y,full)
 pygame.display.set_caption("game")
 
 #import textures
-placeholder = pygame.image.load("textures/placeholder.png")
-placeholder = pygame.transform.scale(placeholder,size)
-placeholder2 = pygame.image.load("textures/placeholder2.png")
-placeholder2 = pygame.transform.scale(placeholder2,Adujuster.get_surface_size((size_x,size_y)))
 
 #Sart stuff
-P = P(100,100,placeholder2)
-dt = 0
 font = pygame.font.SysFont("Arial", 24)
 
-running = True
-while running:
 
-    #exiting the game
-    for event in pygame.event.get():
-        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-            running = False
-    #floor
-    screen.blit(placeholder,(0,0))
 
-    #player
-    screen = P.update(screen,dt,font)
-
-    pygame.display.update()
-
-    dt = fpsClock.tick(fps)
-
-pygame.quit()
-sys.exit()
-=======
-if __name__ == "__main__":
-    main()
 def main():
     import pygame
 
@@ -118,4 +90,3 @@ def main():
 
 if __name__ == "__main__":
     main()
->>>>>>> Stashed changes
