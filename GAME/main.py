@@ -32,6 +32,7 @@ class adujuster():
         #size is width, height
         return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
 
+<<<<<<< Updated upstream
 
 # Set up the window.
 with open("settings.txt","r") as file:
@@ -95,3 +96,26 @@ while running:
 
 pygame.quit()
 sys.exit()
+=======
+if __name__ == "__main__":
+    main()
+def main():
+    import pygame
+
+    from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE
+    from manager import Manager
+
+    pygame.init()
+
+    SCREEN = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    CLOCK = pygame.time.Clock()
+
+    manager = Manager(SCREEN, CLOCK)
+
+    while(1):
+        manager.run()
+        CLOCK.tick(FRAMERATE)
+
+if __name__ == "__main__":
+    main()
+>>>>>>> Stashed changes
