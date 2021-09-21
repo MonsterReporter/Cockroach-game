@@ -15,6 +15,24 @@ pygame.init()
 fps = 60.0
 fpsClock = pygame.time.Clock()
 
+#setup the spirites/images/surfaces adujuster.
+class adujuster():
+    def __init__(self,size_x,size_y,full):
+        self._size_x = size_x
+        self._size_y = size_y
+        self._full = full
+
+    def get_size(self):
+        return (self._size_x,self._size_y)
+    def get_size_x(self):
+        return self._size_x
+    def get_size_y(self):
+        return self._size_y
+    def get_surface_size(self,size):
+        #size is width, height
+        return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
+
+
 # Set up the window.
 with open("settings.txt","r") as file:
     file = list(file.read().split("\n"))
@@ -38,6 +56,8 @@ with open("settings.txt","r") as file:
     else:
         screen = pygame.display.set_mode(size)
 
+Adujuster = adujuster(size_x,size_y,full)
+
 # icon
 # icon = pygame.image.load("none")
 # pygame.display.set_icon(icon)
@@ -49,7 +69,7 @@ pygame.display.set_caption("game")
 placeholder = pygame.image.load("textures/placeholder.png")
 placeholder = pygame.transform.scale(placeholder,size)
 placeholder2 = pygame.image.load("textures/placeholder2.png")
-placeholder2 = pygame.transform.scale(placeholder2,(int(30 / size_x * 1920),int( 60 / size_y * 1080)))
+placeholder2 = pygame.transform.scale(placeholder2,Adujuster.get_surface_size((size_x,size_y)))
 
 #Sart stuff
 P = P(100,100,placeholder2)

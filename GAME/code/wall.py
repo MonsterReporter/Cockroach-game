@@ -2,4 +2,6 @@ import pygame
 from pygame.locals import *
 
 class wall():
-    pass
+    class MyWindow(pygame.Surface):
+        def __init__(self, Adujuster):
+            pygame.Surface.__init__(self, size=(w, h))
