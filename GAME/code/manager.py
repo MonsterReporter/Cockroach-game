@@ -16,7 +16,7 @@ class Manager:
 
         self.CLOCK = clock
 
-        Adujuster = adujuster(self.SCREEN.get_width,self.SCREEN.get_height)
+        Adujuster = adujuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
         self.screenstates = {"game": self.game_loop}
         self.screenstate = self.screenstates["game"]
