@@ -6,13 +6,13 @@ from surface import Surface
 class Player(Surface):
     def __init__(self, display, position,Cavemen):
         super().__init__(display, position, (32))
-        pygame.draw.polygon(self.original_surface, (255, 255, 255), ((16, 0), (32, 32), (16, 26), (0, 32)), width=2)
-        self.update_surface()
+        # pygame.draw.polygon(self.original_surface, (255, 255, 255), ((16, 0), (32, 32), (16, 26), (0, 32)), width=2)
         #idk what is the size I guess 80,60 you can it change in the manager.
         #btw the bow and arrow are in the game files.
 
         # self.Cavemen = Cavemen
         # self.original_surface.blit(Cavemen["caveman down"],(0,0))
+        self.update_surface()
 
         self.velocity = pygame.Vector2(0, 0)
         self.speed = 0.3

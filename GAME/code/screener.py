@@ -13,7 +13,8 @@ class adujuster():
         return self._size_y
     def get_surface_size(self,size):
         #size is width, height
-        return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
+        # return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
+        return (int(size[0] / 1920 * self._size_x),int( size[1] / 1080 * self._size_y))
 
 def set_up_screen():
     # Set up the window.
@@ -35,7 +36,7 @@ def set_up_screen():
         size = (size_x,size_y)
 
         if full:
-            screen = pygame.display.set_mode(size,FULLSCREEN)
+            screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
         else:
             screen = pygame.display.set_mode(size)
 
