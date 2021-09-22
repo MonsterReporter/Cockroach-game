@@ -3,7 +3,7 @@ import sys
 import os
 
 
-from screener import adujuster
+from screener import adjuster
 
 from tile import *
 
@@ -18,21 +18,25 @@ class Manager:
 
         self.CLOCK = clock
 
-        Adujuster = adujuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
+        Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
         self.screenstates = {"game": self.game_loop}
         self.screenstate = self.screenstates["game"]
 
-        #import textures
+        #seting up the tile manager
         self.Tile_Manager = tile_manager({})
         names = ["ice","stone","sand","snow"]
         for name in names:
-            self.Tile_Manager.add_sprite(name,Adujuster)
+            self.Tile_Manager.add_sprite(name,Adjuster)
 
+        #testing tiles.
+        self.Tile_Manager.add_tile(self.SCREEN,Adjuster.get_surface_size((100,100)),"ice",True)
+
+        #import textures
         self.Cavemen = {}
         for file in os.listdir(path="textures/cavemen"):
             self.Cavemen[file.replace(".png","")] = pygame.image.load(f'textures/cavemen/{file}')
-            self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adujuster.get_surface_size((80,60)))
+            self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adjuster.get_surface_size((80,60)))
 
         self.Cockroach = {}
         for file in os.listdir(path="textures/cockroach"):
@@ -53,6 +57,8 @@ class Manager:
                 sys.exit()
         
         self.SCREEN.fill((0, 0, 0))
+
+        self.player = self.Tile_Manager.update(self.player)
 
         self.player.update()
         self.player.draw()

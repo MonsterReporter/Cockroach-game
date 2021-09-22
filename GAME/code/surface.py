@@ -28,6 +28,6 @@ class Surface:
         return self.surface.get_rect(center=self.position)
     
     def collide(self, surface):
-        rect_1 = self.get_rect()
+        rect_1 = self.surface.get_rect()
         rect_2 = surface.get_rect()
-        return rect1.colliderect(rect2)
+        return rect_1.colliderect(rect_2)
