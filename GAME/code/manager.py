@@ -5,6 +5,8 @@ import os
 
 from screener import adujuster
 
+from tile import *
+
 from player import Player
 
 class Manager:
@@ -22,10 +24,10 @@ class Manager:
         self.screenstate = self.screenstates["game"]
 
         #import textures
-        self.Walls = pygame.image.load('textures/ice.png')
-        self.Walls = pygame.image.load('textures/stone.png')
-        self.Walls = pygame.image.load('textures/sand.png')
-        self.Walls = pygame.image.load('textures/snow.png')
+        self.Tile_Manager = tile_manager({})
+        names = ["ice","stone","sand","snow"]
+        for name in names:
+            self.Tile_Manager.add_sprite(name,Adujuster)
 
         self.Cavemen = {}
         for file in os.listdir(path="textures/cavemen"):
