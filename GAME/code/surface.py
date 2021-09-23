@@ -30,4 +30,6 @@ class Surface:
     def collide(self, surface):
         rect_1 = self.surface.get_rect()
         rect_2 = surface.get_rect()
+        print("=============")
+        print(rect_2 , rect_1)
         return rect_1.colliderect(rect_2)

@@ -2,6 +2,7 @@ import pygame
 import math
 
 from surface import Surface
+from laser import Laser
 
 class Player(Surface):
     def __init__(self, display, position,Cavemen):
@@ -19,6 +20,16 @@ class Player(Surface):
         self.speed = 0.3
         self.direction = 0
     
+        self.lasers = []
+
+    def stop_velocity_x():
+        self.velocity.x = 0
+    def stop_velocity_y():
+        self.velocity.y = 0
+
+    def shoot(self):
+        self.lasers.append(Laser(self.DISPLAY, self.position, self.direction))
+    
     def rotate(self):
         mx, my = pygame.mouse.get_pos()
         self.direction = -math.degrees(math.atan2(my - self.position.y, mx - self.position.x))
@@ -31,10 +42,16 @@ class Player(Surface):
         if keys[pygame.K_w]:
             self.velocity.x += math.cos(self.direction)
             self.velocity.y += math.sin(self.direction)
+        elif keys[pygame.K_s]:
+            self.velocity.x += math.cos(self.direction + math.radians(180)) 
+            self.velocity.y += math.sin(self.direction + math.radians(180))
         if keys[pygame.K_a]:
-            self.velocity.x += math.cos(self.direction) - math.radians(90)
+            self.velocity.x += math.cos(self.direction - math.radians(90))
+            self.velocity.y += math.sin(self.direction - math.radians(90))
         elif keys[pygame.K_d]:
-            self.velocity.x += math.cos(self.direction) + math.radians(90)
+            self.velocity.x += math.cos(self.direction + math.radians(90))
+            self.velocity.y += math.sin(self.direction + math.radians(90))
+
 
         self.velocity /= 1.02
 
@@ -46,5 +63,9 @@ class Player(Surface):
         self.position += (self.velocity * self.speed)
 
     def update(self):
+        for laser in self.lasers:
+            laser.update()
+            laser.draw()
+
         self.rotate()
         self.move()
