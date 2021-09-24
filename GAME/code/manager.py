@@ -7,6 +7,8 @@ from screener import adjuster
 
 from tile import *
 
+from main_menu import *
+
 from player import Player
 
 class Manager:
@@ -20,8 +22,8 @@ class Manager:
 
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
-        self.screenstates = {"game": self.game_loop}
-        self.screenstate = self.screenstates["game"]
+        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu}
+        self.screenstate = self.screenstates["main_menu"]
 
         #seting up the tile manager
         self.Tile_Manager = tile_manager({})
@@ -31,6 +33,14 @@ class Manager:
 
         #testing tiles.
         self.Tile_Manager.add_tile(self.SCREEN,Adjuster.get_surface_size((100,100)),"ice",True)
+
+        #setting up the main_menu.
+        self.Menu_Manager = menu_manager()
+
+        self.font = pygame.font.SysFont("Arial", 24)
+
+        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((300,300)) ,"test1" ,self.font, "button", Adjuster)
+        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((300,320)) ,"test2" ,self.font, "label", Adjuster)
 
         #import textures
         self.Cavemen = {}
@@ -48,8 +58,6 @@ class Manager:
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
 
-        self.font = pygame.font.SysFont("Arial", 24)
-
     def game_loop(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
@@ -62,6 +70,18 @@ class Manager:
 
         self.player.update()
         self.player.draw()
+
+        pygame.display.update()
+
+    def main_menu(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                pygame.quit()
+                sys.exit()
+
+        self.SCREEN.fill((0, 0, 0))
+
+        self.Menu_Manager.update()
 
         pygame.display.update()
 

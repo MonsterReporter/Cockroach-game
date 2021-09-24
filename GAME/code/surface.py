@@ -1,12 +1,15 @@
 import pygame
 
 class Surface:
-    def __init__(self, display, position, size, colorkey=(0, 0, 0)):
+    def __init__(self, display, position, size, colorkey=(0, 0, 0),height = None):
         self.DISPLAY = display
         self.DISPLAY_WIDTH = display.get_width()
         self.DISPLAY_HEIGHT = display.get_height()
 
-        self.original_surface = pygame.Surface((size, size))
+        if height == None:
+            self.original_surface = pygame.Surface((size, size))
+        else:
+            self.original_surface = pygame.Surface((size, height))
         self.original_surface.set_colorkey(colorkey)
         self.position = pygame.Vector2(position)
 
@@ -30,6 +33,4 @@ class Surface:
     def collide(self, surface):
         rect_1 = self.surface.get_rect()
         rect_2 = surface.get_rect()
-        print("=============")
-        print(rect_2 , rect_1)
         return rect_1.colliderect(rect_2)
