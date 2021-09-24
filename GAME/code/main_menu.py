@@ -25,8 +25,9 @@ class menu_manager():
             for button in self.buttons:
                 button.update()
                 button.draw()
-        for label in self.labels:
-                label.draw()
+        if self.get_label_amount() != 0:
+            for label in self.labels:
+                    label.draw()
 
     def get_label_amount(self):
         return len(self.labels)
@@ -67,10 +68,12 @@ class button(Surface):
     def update(self):
         print(self.position)
         if pygame.mouse.get_pressed()[0] and self.get_rect().collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.original_surface, (150,150,150), self.text_rect)
+            pygame.draw.rect(self.surface, (150,150,150), self.text_rect)
 
             self.pressed = True
         else:
+            pygame.draw.rect(self.surface, (0,0,0), self.text_rect)
+
             self.pressed = False
 
 
