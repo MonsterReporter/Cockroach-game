@@ -8,11 +8,11 @@ class menu_manager():
         self.buttons = []
         self.labels = []
 
-    def add_button(self ,display ,position ,text ,font, name ,Adjuster):
-        self.buttons.append(button(display ,position ,text ,font, name ,Adjuster))
+    def add_button(self ,display ,position ,text ,font, name ):
+        self.buttons.append(button(display ,position ,text ,font, name ))
 
-    def add_label(self ,display ,position ,text ,font, name ,Adjuster):
-        self.labels.append(label(display ,position ,text ,font, name ,Adjuster))
+    def add_label(self ,display ,position ,text ,font, name ):
+        self.labels.append(label(display ,position ,text ,font, name ))
 
     def remove_all_buttons(self):
         self.buttons.clear()
@@ -46,9 +46,8 @@ class menu_manager():
 
 
 class button(Surface):
-    def __init__(self,display ,position ,text ,font, name ,Adjuster):
-        text = font.render(text, True, (0, 0, 0))
-        text = pygame.transform.scale(text ,Adjuster.get_surface_size(text.get_size()))
+    def __init__(self,display ,position ,text ,font, name ):
+        text = font.render(text, True, (150,150,150))
         text_rect = text.get_rect()
         text_rect.x = 0
         text_rect.y = 0
@@ -56,7 +55,8 @@ class button(Surface):
         super().__init__(display, position, text.get_width(),height = text.get_height())
 
         self.original_surface.blit(text, text_rect)
-        pygame.draw.rect(self.original_surface, (0,0,0), text_rect)
+        pygame.draw.rect(self.original_surface, (0,0,0), text_rect ,1 , border_radius=1)
+
         self.update_surface()
 
         self.name = name
@@ -66,21 +66,19 @@ class button(Surface):
         self.text_rect = text_rect
 
     def update(self):
-        print(self.position)
         if pygame.mouse.get_pressed()[0] and self.get_rect().collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.surface, (150,150,150), self.text_rect)
+            pygame.draw.rect(self.surface, (150,150,150), self.text_rect ,1 , border_radius=1)
 
             self.pressed = True
         else:
-            pygame.draw.rect(self.surface, (0,0,0), self.text_rect)
+            pygame.draw.rect(self.surface, (0,0,0), self.text_rect ,1 , border_radius=1)
 
             self.pressed = False
 
 
 class label(Surface):
-    def __init__(self,display ,position ,text ,font, name ,Adjuster):
-        text = font.render(text, True, (0, 0, 0))
-        text = pygame.transform.scale(text ,Adjuster.get_surface_size(text.get_size()))
+    def __init__(self,display ,position ,text ,font, name ):
+        text = font.render(text, True, (150,150,150))
         text_rect = text.get_rect()
         text_rect.x = 0
         text_rect.y = 0
@@ -88,6 +86,7 @@ class label(Surface):
         super().__init__(display, position, text.get_width(),height = text.get_height())
 
         self.original_surface.blit(text, text_rect)
+        pygame.draw.rect(self.original_surface, (0,0,0), text_rect ,1 , border_radius=1)
         self.update_surface()
 
         self.name = name

@@ -13,7 +13,6 @@ class adjuster():
         return self._size_y
     def get_surface_size(self,size):
         #size is width, height
-        # return (int(30 / size[0] * 1920),int( 60 / size[1] * 1080))
         return (int(size[0] / 1920 * self._size_x),int( size[1] / 1080 * self._size_y))
 
 def set_up_screen():

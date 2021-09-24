@@ -37,10 +37,10 @@ class Manager:
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
 
-        self.font = pygame.font.SysFont("Arial", 24)
+        self.font = pygame.font.SysFont("Arial", Adjuster.get_surface_size((40,24))[0])
 
-        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((300,300)) ,"test1" ,self.font, "button", Adjuster)
-        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((300,320)) ,"test2" ,self.font, "label", Adjuster)
+        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((300,300)) ,"test1" ,self.font, "button")
+        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((300,320)) ,"test2" ,self.font, "label")
 
         #import textures
         self.Cavemen = {}
