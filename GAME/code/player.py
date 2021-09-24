@@ -7,10 +7,6 @@ from laser import Laser
 class Player(Surface):
     def __init__(self, display, position,Cavemen):
         super().__init__(display, position, (Cavemen["caveman up"].get_width()))
-        # pygame.draw.polygon(self.original_surface, (255, 255, 255), ((16, 0), (32, 32), (16, 26), (0, 32)), width=2)
-        #idk what is the size I guess 80,60 you can it change in the manager.
-        #btw the bow and arrow are in the game files.
-        # and add the abilities to go back
 
         self.Cavemen = Cavemen
         self.original_surface.blit(Cavemen["caveman up"],(0,0))

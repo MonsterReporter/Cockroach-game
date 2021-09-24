@@ -1,5 +1,5 @@
 import pygame
 from pygame.locals import *
 
-class wall():
+class enemy_manager():
     pass
