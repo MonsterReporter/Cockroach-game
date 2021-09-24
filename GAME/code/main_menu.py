@@ -38,7 +38,7 @@ class menu_manager():
     def get_pressed(self):
         output = {}
         for button in self.buttons:
-            if button.get_pressed:
+            if button.pressed:
                 output[button.name] = button
 
         return output

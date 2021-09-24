@@ -66,24 +66,32 @@ class Tile(Surface):
     def update(self ,player):
         if self.get_wall():
 
-            if player.collide(self.surface):
+            if player.get_rect().colliderect(self.surface.get_rect()):
                 if player.position[0] > self.position[0]:
-                    player.position[0] += 2
+                    player.position[0] = self.position[0] + self.get_half()
+                    player.stop_velocity_x()
+
                     # player.position[0] += (self.position[0] + self.get_size) - + 2
                     # P.append_to_keys_blocked("a")
 
                 elif player.position[0] < self.position[0]:
-                    player.position[0] -= 2
+                    player.position[0] = self.position[0] - self.get_half()
+                    player.stop_velocity_x()
+
                     # player.position[0] -= (self.position[0] + self.get_size) + P.radius - + 2
                     # P.append_to_keys_blocked("d")
 
                 if player.position[1] > self.position[1]:
-                    player.position[1] += 2
+                    player.position[1] = self.position[1] + self.get_half()
+                    player.stop_velocity_y()
+
                     # player.position[1] += (self.position[1] + self.get_size) + player.position[1]. - + 2
                     # P.append_to_keys_blocked("w")
 
                 elif player.position[1] < self.position[1]:
-                    player.position[1] -= 2
+                    player.position[1] = self.position[1] - self.get_half()
+                    player.stop_velocity_y()
+
                     # player.position[1] -= self.radius + P.radius - + 2
                     # P.append_to_keys_blocked("s")
 

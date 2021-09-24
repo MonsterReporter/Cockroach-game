@@ -22,9 +22,9 @@ class Player(Surface):
     
         self.lasers = []
 
-    def stop_velocity_x():
+    def stop_velocity_x(self):
         self.velocity.x = 0
-    def stop_velocity_y():
+    def stop_velocity_y(self):
         self.velocity.y = 0
 
     def shoot(self):

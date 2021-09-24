@@ -22,7 +22,7 @@ class Manager:
 
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
-        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu}
+        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu, "transition": self.transition_loop}
         self.screenstate = self.screenstates["main_menu"]
 
         #seting up the tile manager
@@ -37,7 +37,7 @@ class Manager:
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
 
-        self.font = pygame.font.SysFont("Arial", Adjuster.get_surface_size((40,24))[0])
+        self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((100,24))[0])
 
         self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((300,300)) ,"test1" ,self.font, "button")
         self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((300,320)) ,"test2" ,self.font, "label")
@@ -52,11 +52,13 @@ class Manager:
         for file in os.listdir(path="textures/cockroach"):
             self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
 
-            
-
 
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
+
+        self.transition_endstate = None
+        self.TRANSITION = pygame.USEREVENT + 0
+        pygame.time.set_timer(self.TRANSITION, 2000)
 
     def game_loop(self):
         for event in pygame.event.get():
@@ -64,7 +66,7 @@ class Manager:
                 pygame.quit()
                 sys.exit()
         
-        self.SCREEN.fill((0, 0, 0))
+        self.SCREEN.fill((0, 0, 255))
 
         self.player = self.Tile_Manager.update(self.player)
 
@@ -78,12 +80,38 @@ class Manager:
             if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
                 pygame.quit()
                 sys.exit()
+                
 
         self.SCREEN.fill((0, 0, 0))
 
         self.Menu_Manager.update()
+        pressed = self.Menu_Manager.get_pressed()
+
+        try:
+            if pressed["button"]:
+                self.transition_to("game")
+        except:
+            pass
+
 
         pygame.display.update()
+
+    def transition_loop(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                pygame.quit()
+                sys.exit()
+            if event.type == self.TRANSITION:
+                self.screenstate = self.transition_endstate
+
+        self.SCREEN.fill((255, 0, 0))
+
+        pygame.display.update()
+
+    def transition_to(self, state):
+        pygame.event.clear(self.TRANSITION)
+        self.transition_endstate = self.screenstates[state]
+        self.screenstate = self.screenstates["transition"]
 
     def run(self):
         self.screenstate()

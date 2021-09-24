@@ -25,7 +25,7 @@ class Surface:
         return self.surface.get_width()
     
     def get_half(self):
-        return self.get_surface.get_width() / 2
+        return self.surface.get_width() / 2
     
     def get_rect(self):
         return self.surface.get_rect(center=self.position)
