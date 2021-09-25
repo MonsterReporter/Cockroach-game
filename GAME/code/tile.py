@@ -154,8 +154,8 @@ class Tile(Surface):
 
                 # player.position.xy = rect.center
             
-            x = player.position.x + math.cos(player.direction)
-            y = player.position.y + math.sin(player.direction)
+            x = player.position.x + math.cos(player.direction) * 30 / self.DISPLAY_WIDTH * 1920
+            y = player.position.y + math.sin(player.direction) * 30 / self.DISPLAY_WIDTH * 1920
             if self.get_rect().collidepoint(x,y):
                 player.block_key(pygame.K_w)
 
