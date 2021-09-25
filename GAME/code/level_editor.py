@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+from random import choice
 
 import pickle
 
@@ -19,6 +20,8 @@ class level_creator(Surface):
         Adjuster = adjuster(self.DISPLAY_WIDTH,self.DISPLAY_HEIGHT)
         self.Adjuster = Adjuster
 
+        self.update_surface()
+
         #textures
         self.Cavemen = {}
         for file in os.listdir(path="textures/cavemen"):
@@ -35,7 +38,7 @@ class level_creator(Surface):
         self.Menu_Manager = menu_manager()
         self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((60,24))[0])
 
-        self.player = Player(self.DISPLAY, self.get_rect().center,self.Cavemen)
+        self.player = Player(self.surface, self.get_rect().center,self.Cavemen)
         self.player.controlled = False
 
         self.player.position[0] = 10000
@@ -62,21 +65,39 @@ class level_creator(Surface):
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
 
-    def laod()
-        with open("levels/num.txt","r") as num:
-            number = int(num.read())
-            with open("levels/num.txt","w") as numw:
-                numw.write(str(number + 1))
-
-        with open(f"levels/level{number}.txt","wb") as fp:
-            pickle.dump(self.Level, fp)
-
+    def load(self):
 
         self.Level = {'tile':[],'player':[],'text':[],'enemies':[]}
         self.player.position.x = 100000
         self.Menu_Manager.remove_all_buttons()
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
+
+        with open("levels/level_list.txt","r") as num:
+            level_name = choice(num.read())
+
+        with open(f"levels/{level_name}.txt","rb") as fp:
+            self.Level = pickle.load(fp)
+
+        try:
+            for tile in self.Level["tile"]:
+                tile[0] = self.surface
+                Menu_Manager.add_tile(tile[0],self.Adjuster.get_surface_size(tile[1]),tile[2],tile[3])
+
+        except:
+            print("error")
+
+        try:
+            for player in self.Level["player"]:
+                self.player = self.player = Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen)
+
+        except:
+            print('error')
+
+        print("import ended")
+
+
+
 
     def update(self):
 

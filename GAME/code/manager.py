@@ -11,6 +11,8 @@ from main_menu import *
 
 from level_editor import *
 
+from level_importer import *
+
 from player import Player
 
 class Manager:
@@ -24,8 +26,10 @@ class Manager:
 
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
-        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu, "transition": self.transition_loop,
-            "level_creator" : self.level_ediotor
+        self.screenstates = {"game": self.game_transition,"main_menu": self.main_menu, 
+            "transition": self.transition_loop,
+            "level_creator" : self.level_ediotor,
+            "game_loop": self.game_loop
             }
         self.screenstate = self.screenstates["main_menu"]
 
@@ -64,6 +68,8 @@ class Manager:
         #setting up the level_creator
         self.Level_Creator = level_creator(self.SCREEN)
 
+        #setting up level_importer
+        self.Level_Importer = level_importer(self.SCREEN)
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
 
@@ -71,18 +77,25 @@ class Manager:
         self.TRANSITION = pygame.USEREVENT + 0
         pygame.time.set_timer(self.TRANSITION, 2000)
 
-    def game_loop(self):
+    def game_transition(self):
         for event in pygame.event.get():
-            if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+            if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
-        
-        self.SCREEN.fill((0, 0, 255))
 
-        self.player = self.Tile_Manager.update(self.player)
+        self.Level_Importer.load()
+        self.transition_to("game_loop")
 
-        self.player.update()
-        self.player.draw()
+    def game_loop(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if  (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                self.transition_to("main_menu")
+
+        self.Level_Importer.update()
+        self.Level_Importer.draw()
 
         pygame.display.update()
 

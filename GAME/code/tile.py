@@ -70,8 +70,6 @@ class Tile(Surface):
 
             if player.get_rect().colliderect(self.surface.get_rect()):
 
-                # self.rect = pygame.Rect(self.get_rect().left + offset, self.get_rect().top, player.get_width(), player.get_width())
-
                 if player.position[0] > self.position[0]:
                     player_rect.right = self.get_rect().left
                     player.stop_velocity_x()
