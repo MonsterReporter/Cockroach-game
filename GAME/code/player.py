@@ -10,7 +10,8 @@ class Player(Surface):
 
         self.Cavemen = Cavemen
         self.original_surface.blit(Cavemen["caveman up"],(0,0))
-        pygame.draw.rect(self.original_surface, (100,100,100), Cavemen["caveman up"].get_rect() ,1 , border_radius=1)
+        w = self.get_width()
+        pygame.draw.polygon(self.original_surface,(0,0,222),((0,0),(w,0),(w,w),(0,w)),1)
         self.update_surface()
 
         self.velocity = pygame.Vector2(0, 0)
@@ -23,12 +24,16 @@ class Player(Surface):
 
         self.controlled = True
 
+        self.collsion_box = get_surface(self.DISPLAY,self.position.xy,self.get_width())
+
+        self.box = self.collsion_box.get_rect()
+
     def stop_velocity_x(self):
         self.velocity.x = 0
     def stop_velocity_y(self):
         self.velocity.y = 0
 
-    def block_key(key):
+    def block_key(self,key):
         self.blocked_key.append(key)
 
     def clear_blocked_keys(self):
@@ -46,7 +51,7 @@ class Player(Surface):
         self.direction = -math.radians(self.direction)
 
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
+        if keys[pygame.K_w] and not pygame.K_w in self.blocked_key:
             self.velocity.x += math.cos(self.direction)
             self.velocity.y += math.sin(self.direction)
         elif keys[pygame.K_s]:
@@ -83,3 +88,9 @@ class Player(Surface):
 
         else:
             self.rotate()
+
+
+def get_surface(display, position,size):
+    surface = Surface(display,position,size)
+    surface.update_surface()
+    return surface
