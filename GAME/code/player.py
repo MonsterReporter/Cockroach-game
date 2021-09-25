@@ -10,6 +10,7 @@ class Player(Surface):
 
         self.Cavemen = Cavemen
         self.original_surface.blit(Cavemen["caveman up"],(0,0))
+        pygame.draw.rect(self.original_surface, (100,100,100), Cavemen["caveman up"].get_rect() ,1 , border_radius=1)
         self.update_surface()
 
         self.velocity = pygame.Vector2(0, 0)
@@ -18,10 +19,18 @@ class Player(Surface):
     
         self.lasers = []
 
+        self.blocked_key = []
+
     def stop_velocity_x(self):
         self.velocity.x = 0
     def stop_velocity_y(self):
         self.velocity.y = 0
+
+    def block_key(key):
+        self.blocked_key.append(key)
+
+    def clear_blocked_keys():
+        self.blocked_key.clear()
 
     def shoot(self):
         self.lasers.append(Laser(self.DISPLAY, self.position, self.direction))
@@ -65,3 +74,5 @@ class Player(Surface):
 
         self.rotate()
         self.move()
+
+        self.clear_blocked_keys()

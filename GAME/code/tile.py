@@ -56,6 +56,7 @@ class Tile(Surface):
         super().__init__(display, position, (sprite.get_width()))
 
         self.original_surface.blit(sprite, (0 ,0))
+        pygame.draw.rect(self.original_surface, (100,100,100), (0,0,display.get_width(),display.get_width()) ,1 , border_radius=1)
         self.update_surface()
 
         self.wall = wall
@@ -69,6 +70,9 @@ class Tile(Surface):
             player_rect = player.get_rect()
 
             if player.get_rect().colliderect(self.surface.get_rect()):
+
+                # self.rect = pygame.Rect(self.get_rect().left + offset, self.get_rect().top, player.get_width(), player.get_width())
+
                 if player.position[0] > self.position[0]:
                     player_rect.right = self.get_rect().left
                     player.stop_velocity_x()
@@ -79,12 +83,31 @@ class Tile(Surface):
 
                 if player.position[1] > self.position[1]:
                     player_rect.bottom = self.get_rect().top
+                    player_rect.centerx = player_rect.top - self.get_rect().bottom
                     player.stop_velocity_y()
 
                 elif player.position[1] < self.position[1]:
-                    player_rect.top = self.get_rect().bottom
+                    player_rect.centerx = player_rect.bottom - self.get_rect().top
                     player.stop_velocity_y()
 
-                    player.surface.position = player_rect
+
+                # if player.position[0] > self.position[0]:
+                #     player_rect.right = self.get_rect().left
+                #     player.stop_velocity_x()
+
+                # elif player.position[0] < self.position[0]:
+                #     player_rect.left = self.get_rect().right
+                #     player.stop_velocity_x()
+
+                # if player.position[1] > self.position[1]:
+                #     player_rect.bottom = self.get_rect().top
+                #     player.stop_velocity_y()
+
+                # elif player.position[1] < self.position[1]:
+                #     player_rect.top = self.get_rect().bottom
+                #     player.stop_velocity_y()
+
+                player.position[0] = player_rect.centerx
+                player.position[1] = player_rect.centery
 
         return player
