@@ -80,3 +80,6 @@ class Player(Surface):
             self.move()
 
             self.clear_blocked_keys()
+
+        else:
+            self.rotate()

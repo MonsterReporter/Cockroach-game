@@ -13,12 +13,11 @@ class tile_manager():
         sprite = self.sprites[img_name]
         self.tiles.append(Tile(display ,position ,sprite ,wall ))
 
-    def remove_tile(self,x,y,w,h,wall):
+    def remove_tile(self,pos):
         # the wall is boolen
-        tile_to_remove = Rect(x, y, w, h)
         for tile in self.tiles:
-            if tile.collide(tile_to_remove) and tile.get_wall() == wall:
-                self.tiles.pop(self.index(tile))
+            if tile.get_rect().collidepoint(pos):
+                self.tiles.pop(self.tiles.index(tile))
                 break
 
     def remove_all_walls(self):

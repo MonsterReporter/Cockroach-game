@@ -31,7 +31,7 @@ class Manager:
 
         #seting up the tile manager
         self.Tile_Manager = tile_manager({})
-        names = ["ice","stone","sand","snow"]
+        names = ["ice","stone","sand","snow","grass","coble","stump"]
         for name in names:
             self.Tile_Manager.add_sprite(name,Adjuster)
 
