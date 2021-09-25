@@ -35,7 +35,7 @@ def set_up_screen():
                 size_y = int(i.split(":")[1])
 
         size = (size_x,size_y)
-        print("Your screen size is", size)
+        print("The Window size is", size)
 
         if full:
             screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
