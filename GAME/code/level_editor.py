@@ -62,6 +62,21 @@ class level_creator(Surface):
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
 
+    def laod()
+        with open("levels/num.txt","r") as num:
+            number = int(num.read())
+            with open("levels/num.txt","w") as numw:
+                numw.write(str(number + 1))
+
+        with open(f"levels/level{number}.txt","wb") as fp:
+            pickle.dump(self.Level, fp)
+
+
+        self.Level = {'tile':[],'player':[],'text':[],'enemies':[]}
+        self.player.position.x = 100000
+        self.Menu_Manager.remove_all_buttons()
+        self.Menu_Manager.remove_all_labels()
+        self.Tile_Manager.remove_all_tiles()
 
     def update(self):
 
