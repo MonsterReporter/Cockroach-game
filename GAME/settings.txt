@@ -1,11 +1,9 @@
+#no spaces after the ":".
 FullScreen :1
-#Determines whether the game is fullscreen
 
+#Normal screen size
 screenSize_x :1920
 screenSize_y :1080
-#Determines the screen's size
-#no spaces after the ":".
-##VirusChara - Tried making it more easily readable.
 
 #small screen size
 #screenSize_x :640

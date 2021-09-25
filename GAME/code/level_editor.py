@@ -65,6 +65,7 @@ class level_creator(Surface):
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
 
+
     def load(self):
 
         self.Level = {'tile':[],'player':[],'text':[],'enemies':[]}
