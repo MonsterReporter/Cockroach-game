@@ -27,16 +27,15 @@ def set_up_screen():
         size_x, size_y , full = 640, 480, False
         
         for i in file:
-            if i.startswith("#"):
-                file.pop(file.index(i))
             if i.startswith("FullScreen"):
                 full = bool(int(i.split(":")[1]))
-            if i.startswith("screenSize_x"):
+            if i.startswith("ScreenSize_x"):
                 size_x = int(i.split(":")[1])
-            if i.startswith("screenSize_y"):
+            if i.startswith("ScreenSize_y"):
                 size_y = int(i.split(":")[1])
 
         size = (size_x,size_y)
+        print("Your screen size is", size)
 
         if full:
             screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
