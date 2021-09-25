@@ -66,21 +66,25 @@ class Tile(Surface):
     def update(self ,player):
         if self.get_wall():
 
+            player_rect = player.get_rect()
+
             if player.get_rect().colliderect(self.surface.get_rect()):
                 if player.position[0] > self.position[0]:
-                    player.position[0] = self.position[0] + self.get_half()
+                    player_rect.right = self.get_rect().left
                     player.stop_velocity_x()
 
                 elif player.position[0] < self.position[0]:
-                    player.position[0] = self.position[0] - self.get_half()
+                    player_rect.left = self.get_rect().right
                     player.stop_velocity_x()
 
                 if player.position[1] > self.position[1]:
-                    player.position[1] = self.position[1] + self.get_half()
+                    player_rect.bottom = self.get_rect().top
                     player.stop_velocity_y()
 
                 elif player.position[1] < self.position[1]:
-                    player.position[1] = self.position[1] - self.get_half()
+                    player_rect.top = self.get_rect().bottom
                     player.stop_velocity_y()
+
+                    player.surface.position = player_rect
 
         return player

@@ -47,15 +47,19 @@ class menu_manager():
 
 class button(Surface):
     def __init__(self,display ,position ,text ,font, name ):
-        text = font.render(text, True, (150,150,150))
+        text = font.render(text, True, (200,215,200))
         text_rect = text.get_rect()
         text_rect.x = 0
         text_rect.y = 0
 
         super().__init__(display, position, text.get_width(),height = text.get_height())
 
+        self.border = int( 1 / 1080 * self.DISPLAY.get_width())
+
         self.original_surface.blit(text, text_rect)
-        pygame.draw.rect(self.original_surface, (0,0,0), text_rect ,1 , border_radius=1)
+
+
+        pygame.draw.rect(self.original_surface, (100,100,100), text_rect ,self.border , border_radius=1)
 
         self.update_surface()
 
@@ -67,18 +71,18 @@ class button(Surface):
 
     def update(self):
         if pygame.mouse.get_pressed()[0] and self.get_rect().collidepoint(pygame.mouse.get_pos()):
-            pygame.draw.rect(self.surface, (150,150,150), self.text_rect ,1 , border_radius=1)
+            pygame.draw.rect(self.surface, (200,200,200), self.text_rect ,self.border , border_radius= 1)
 
             self.pressed = True
         else:
-            pygame.draw.rect(self.surface, (0,0,0), self.text_rect ,1 , border_radius=1)
+            pygame.draw.rect(self.surface, (100,100,100), self.text_rect ,self.border , border_radius=1)
 
             self.pressed = False
 
 
 class label(Surface):
     def __init__(self,display ,position ,text ,font, name ):
-        text = font.render(text, True, (150,150,150))
+        text = font.render(text, True, (200,215,200))
         text_rect = text.get_rect()
         text_rect.x = 0
         text_rect.y = 0
