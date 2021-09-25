@@ -21,6 +21,8 @@ class Player(Surface):
 
         self.blocked_key = []
 
+        self.controlled = True
+
     def stop_velocity_x(self):
         self.velocity.x = 0
     def stop_velocity_y(self):
@@ -29,7 +31,7 @@ class Player(Surface):
     def block_key(key):
         self.blocked_key.append(key)
 
-    def clear_blocked_keys():
+    def clear_blocked_keys(self):
         self.blocked_key.clear()
 
     def shoot(self):
@@ -68,11 +70,13 @@ class Player(Surface):
         self.position += (self.velocity * self.speed)
 
     def update(self):
-        for laser in self.lasers:
-            laser.update()
-            laser.draw()
+        if self.controlled:
 
-        self.rotate()
-        self.move()
+            for laser in self.lasers:
+                laser.update()
+                laser.draw()
 
-        self.clear_blocked_keys()
+            self.rotate()
+            self.move()
+
+            self.clear_blocked_keys()

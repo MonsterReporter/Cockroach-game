@@ -9,6 +9,8 @@ from tile import *
 
 from main_menu import *
 
+from level_editor import *
+
 from player import Player
 
 class Manager:
@@ -22,7 +24,9 @@ class Manager:
 
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
 
-        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu, "transition": self.transition_loop}
+        self.screenstates = {"game": self.game_loop,"main_menu": self.main_menu, "transition": self.transition_loop,
+            "level_creator" : self.level_ediotor
+            }
         self.screenstate = self.screenstates["main_menu"]
 
         #seting up the tile manager
@@ -42,6 +46,8 @@ class Manager:
         self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
         self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
 
+
+
         #import textures
         self.Cavemen = {}
         for file in os.listdir(path="textures/cavemen"):
@@ -55,6 +61,8 @@ class Manager:
         self.cover = pygame.image.load(f'textures/cover.png')
         self.cover = pygame.transform.scale(self.cover,Adjuster.get_surface_size((1920,1080)))
 
+        #setting up the level_creator
+        self.Level_Creator = level_creator(self.SCREEN)
 
 
         self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
@@ -83,6 +91,10 @@ class Manager:
             if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
                 pygame.quit()
                 sys.exit()
+
+            if (pygame.key.get_pressed()[pygame.K_l]):
+                self.transition_to("level_creator")
+
                 
 
         # self.SCREEN.fill((0, 0, 0))
@@ -97,6 +109,27 @@ class Manager:
         except:
             pass
 
+
+        pygame.display.update()
+
+    def level_ediotor(self):
+        for event in pygame.event.get():
+            if (pygame.key.get_pressed()[pygame.K_BACKSPACE]):
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.QUIT:
+                self.Level_Creator.save()
+                pygame.quit()
+                sys.exit()
+            if (pygame.key.get_pressed()[pygame.K_ESCAPE]) or (pygame.key.get_pressed()[pygame.K_LCTRL] and pygame.key.get_pressed()[pygame.K_s]):
+                self.Level_Creator.save()
+                self.transition_to("main_menu")
+
+        self.SCREEN.fill((0, 0, 0))
+        
+        self.Level_Creator.update()
+        self.Level_Creator.draw()
 
         pygame.display.update()
 

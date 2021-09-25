@@ -15,6 +15,10 @@ class adjuster():
         #size is width, height
         return (int(size[0] / 1920 * self._size_x),int( size[1] / 1080 * self._size_y))
 
+    def get_surface_size_reverse(self,size):
+        #size is width, height
+        return (int(size[0] / self._size_x * 1920),int( size[1] / self._size_y * 1080))
+
 def set_up_screen():
     # Set up the window.
     with open("settings.txt","r") as file:
