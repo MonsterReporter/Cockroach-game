@@ -37,10 +37,10 @@ class Manager:
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
 
-        self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((100,24))[0])
+        self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((60,24))[0])
 
-        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((300,300)) ,"test1" ,self.font, "button")
-        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((300,320)) ,"test2" ,self.font, "label")
+        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
+        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
 
         #import textures
         self.Cavemen = {}
@@ -51,6 +51,9 @@ class Manager:
         self.Cockroach = {}
         for file in os.listdir(path="textures/cockroach"):
             self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
+
+        self.cover = pygame.image.load(f'textures/cover.png')
+        self.cover = pygame.transform.scale(self.cover,Adjuster.get_surface_size((1920,1080)))
 
 
 
@@ -82,7 +85,8 @@ class Manager:
                 sys.exit()
                 
 
-        self.SCREEN.fill((0, 0, 0))
+        # self.SCREEN.fill((0, 0, 0))
+        self.SCREEN.blit(self.cover,(0,0))
 
         self.Menu_Manager.update()
         pressed = self.Menu_Manager.get_pressed()
