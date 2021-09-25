@@ -21,11 +21,14 @@ class Surface:
     def draw(self):
         self.DISPLAY.blit(self.surface, self.surface.get_rect(center=self.position))
     
-    def get_size(self):
+    def get_width(self):
         return self.surface.get_width()
     
+    def get_height(self):
+        return self.surface.get_height()
+    
     def get_half(self):
-        return self.surface.get_width() / 2
+        return (self.get_width() / 2, self.get_height() / 2)
     
     def get_rect(self):
         return self.surface.get_rect(center=self.position)

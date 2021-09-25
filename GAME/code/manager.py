@@ -1,6 +1,8 @@
 import pygame
 import sys
 import os
+import webbrowser as web
+
 
 
 from screener import adjuster
@@ -25,11 +27,13 @@ class Manager:
         self.CLOCK = clock
 
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
+        self.Adjuster = Adjuster
 
         self.screenstates = {"game": self.game_transition,"main_menu": self.main_menu, 
             "transition": self.transition_loop,
             "level_creator" : self.level_ediotor,
-            "game_loop": self.game_loop
+            "game_loop": self.game_loop,
+            "credits" : self.credits
             }
         self.screenstate = self.screenstates["main_menu"]
 
@@ -48,6 +52,8 @@ class Manager:
         self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((60,24))[0])
 
         self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
+        self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
+        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
         self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
 
 
@@ -106,11 +112,24 @@ class Manager:
                 sys.exit()
 
             if (pygame.key.get_pressed()[pygame.K_l]):
-                self.transition_to("level_creator")
+                self.transition_to("level_creator") 
 
-                
+            if (pygame.key.get_pressed()[pygame.K_c]):
+                self.Menu_Manager.clear()
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080* 3 / 4)) ,"back" ,self.font, "button")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Credits" ,self.font, "label")
+
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"developers" ,self.font, "label")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,450)) ,"catornot" ,self.font, "catornot")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,510)) ,"Intense" ,self.font, "Intense")
+
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,600)) ,"Artist" ,self.font, "label")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,650)) ,"MonsterReporter" ,self.font, "MonsterReporter")
+                self.transition_to("credits")              
 
         # self.SCREEN.fill((0, 0, 0))
+        pygame.display.update()
+
         self.SCREEN.blit(self.cover,(0,0))
 
         self.Menu_Manager.update()
@@ -119,6 +138,79 @@ class Manager:
         try:
             if pressed["button"]:
                 self.transition_to("game")
+                
+        except:
+            pass
+
+
+        try:
+            if pressed["esc"]:
+                font = pygame.font.Font("freesansbold.ttf", self.Adjuster.get_surface_size((200,24))[0])
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080/2)) ,"Press ESC" ,font, "label")
+
+        except:
+            self.Menu_Manager.remove_all_labels()
+            self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+
+        try:
+            if pressed["credits"]:
+                self.Menu_Manager.clear()
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080* 3 / 4)) ,"back" ,self.font, "button")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Credits" ,self.font, "label")
+
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"developers" ,self.font, "label")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,450)) ,"catornot" ,self.font, "catornot")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,510)) ,"Intense" ,self.font, "Intense")
+
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,600)) ,"Artist" ,self.font, "label")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,650)) ,"MonsterReporter" ,self.font, "MonsterReporter")
+                self.transition_to("credits")
+        except:
+            pass
+
+    def credits(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if  (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                self.Menu_Manager.clear()
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+                self.transition_to("main_menu")
+
+
+        self.SCREEN.fill((255,190,168))
+
+        self.Menu_Manager.update()
+        pressed = self.Menu_Manager.get_pressed()
+
+        try:
+            if pressed["button"]:
+                self.Menu_Manager.clear()
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+                self.transition_to("main_menu")
+        except:
+            pass
+
+        try:
+            if pressed["catornot"]:
+                web.open("https://github.com/catornot")
+        except:
+            pass
+
+        try:
+            if pressed["Intense"]:
+                web.open("https://github.com/")
+        except:
+            pass
+
+        try:
+            if pressed["MonsterReporter"]:
+                web.open("https://github.com/")
         except:
             pass
 

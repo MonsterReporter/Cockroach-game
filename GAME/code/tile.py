@@ -68,43 +68,20 @@ class Tile(Surface):
 
             player_rect = player.get_rect()
 
-            if player.get_rect().colliderect(self.surface.get_rect()):
+            if player_rect.colliderect(self.get_rect()):
+                if player.velocity.x < 0:
+                    player.position.x = self.get_rect().right + self.get_half()[0]
+                elif player.velocity.x > 0:
+                    player.position.x = self.get_rect().left - self.get_half()[0]
+                player.velocity.update(0, 0)
 
-                if player.position[0] > self.position[0]:
-                    player_rect.right = self.get_rect().left
-                    player.stop_velocity_x()
-
-                elif player.position[0] < self.position[0]:
-                    player_rect.left = self.get_rect().right
-                    player.stop_velocity_x()
-
-                if player.position[1] > self.position[1]:
-                    player_rect.bottom = self.get_rect().top
-                    player_rect.centerx = player_rect.top - self.get_rect().bottom
-                    player.stop_velocity_y()
-
-                elif player.position[1] < self.position[1]:
-                    player_rect.centerx = player_rect.bottom - self.get_rect().top
-                    player.stop_velocity_y()
-
-
-                # if player.position[0] > self.position[0]:
-                #     player_rect.right = self.get_rect().left
-                #     player.stop_velocity_x()
-
-                # elif player.position[0] < self.position[0]:
-                #     player_rect.left = self.get_rect().right
-                #     player.stop_velocity_x()
-
-                # if player.position[1] > self.position[1]:
-                #     player_rect.bottom = self.get_rect().top
-                #     player.stop_velocity_y()
-
-                # elif player.position[1] < self.position[1]:
-                #     player_rect.top = self.get_rect().bottom
-                #     player.stop_velocity_y()
-
-                player.position[0] = player_rect.centerx
-                player.position[1] = player_rect.centery
-
+            player_rect = player.get_rect()
+                
+            if player_rect.colliderect(self.get_rect()):
+                if player.velocity.y < 0:
+                    player.position.y = self.get_rect().bottom + self.get_half()[1]
+                elif player.velocity.y > 0:
+                    player.position.y = self.get_rect().top - self.get_half()[1]
+                player.velocity.update(0, 0)
+                
         return player

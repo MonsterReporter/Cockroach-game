@@ -20,6 +20,10 @@ class menu_manager():
     def remove_all_labels(self):
         self.labels.clear()
 
+    def clear(self):
+        self.buttons.clear()
+        self.labels.clear()
+
     def update(self):
         if self.get_button_amount() != 0:
             for button in self.buttons:
