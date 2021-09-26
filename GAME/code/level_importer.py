@@ -134,12 +134,15 @@ class level_importer(Surface):
         #update classes
         self.Tile_Manager.update(self.player)
         self.Menu_Manager.update()
-        self.Enemy_Manager.update(self.Tile_Manager.get_walls(),self.player.position.xy)
+        cords2 = self.Enemy_Manager.update(self.Tile_Manager.get_walls(),self.player)
         cords = self.player.update(walls = self.Tile_Manager.get_walls(), enemies = self.Enemy_Manager.get_enemies_all())
         self.player.draw()
 
         if cords != None:
             self.Enemy_Manager.remove(cords)
+        if cords2 != None:
+            if self.player.get_rect().collidepoint(cords2):
+                return True
 
 
         if self.Enemy_Manager.get_count() == 0:

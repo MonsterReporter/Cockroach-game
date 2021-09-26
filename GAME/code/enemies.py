@@ -44,14 +44,19 @@ class enemy_manager():
             output += len(self.Enemies[Type])
         return output
 
-    def update(self,walls,player_pos):
+    def update(self,walls,player):
+        cords = None
+
         for Type in list(self.Enemies.keys()):
             for enem in self.Enemies[Type]:
-
-                if enem.update(walls,player_pos):
+                boolen ,cords = enem.update(walls,player)
+                if boolen:
                     self.Enemies[Type].pop(self.Enemies[Type].index(enem))
 
                 enem.draw()
+
+
+        return cords
 
     def add_Enemie(self,display,Type,position,active):
         if Type == "cockroach":
@@ -82,7 +87,7 @@ class cockroach(Surface):
 
         self.collided = False
 
-        self.sec = 0
+        self.sec = 2
         self.start_ticks=pygame.time.get_ticks()
 
     def rotate(self):
@@ -153,20 +158,25 @@ class cockroach(Surface):
         for wall in walls:
             wall = self.ray(wall)
 
-    def player_shoot(self,player_pos):
-        pass
+    def player_shoot(self,player):
+        if self.sec < (pygame.time.get_ticks()-self.start_ticks)/1000:
+            self.sec = 2
+            self.start_ticks=pygame.time.get_ticks()
+            self.lasers.append(Laser(self.DISPLAY, self.position.xy, self.direction,self.sprites["projectile3"],None))
 
-    def update(self,walls,player_pos):
+    def update(self,walls,player):
         if self.active:
 
+            cords = None
+
             for laser in self.lasers:
-                laser.draw()
-                if laser.update(walls):
+                boolen , cords = laser.update(walls,{"":[player]})
+                if boolen:
                     self.lasers.pop(self.lasers.index(laser))
-                
+                laser.draw()
 
             self.collision(walls)
-            self.player_shoot(player_pos)
+            self.player_shoot(player)
 
             self.rotate()
             self.move()
@@ -174,9 +184,11 @@ class cockroach(Surface):
             if self.position.x > self.DISPLAY_WIDTH or self.position.y > self.DISPLAY_HEIGHT \
                 or self.position.x < 0 or self.position.y < 0:
                 # print("gone")
-                return True
+                return True , cords
+
+            return False , cords
 
         else:
             self.rotate()
 
-        return False
+        return False , None
