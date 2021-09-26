@@ -26,11 +26,11 @@ class Player(Surface):
 
         self.Bow = Surface(self.surface,self.position,Bow[0].get_width())
 
-        rect = Cavemen["caveman up"].get_rect().center = self.position.xy
-
-        self.Bow.position.xy = self.get_rect().topright
+        self.Bow.position.xy = (self.get_half()[0],0)
+        self.Bow.position.xy 
         self.Bow.original_surface.blit(Bow[0],(0,0))
         self.Bow.update_surface()
+        print(self.Bow.position.xy)
 
     def stop_velocity_x(self):
         self.velocity.x = 0
