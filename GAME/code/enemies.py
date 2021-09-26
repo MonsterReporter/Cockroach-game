@@ -1,6 +1,6 @@
 import pygame
 
-class enemy_manager(self):
+class enemy_manager():
     def __init__(self,display,Enemie1):
         self.DISPLAY = display
         self.Enemie1 = Enemie1
@@ -44,3 +44,19 @@ class cockroach(Surface):
         super().__init__(display, position, (width),height = height)
 
         self.sprites = sprites
+        self.original_surface.blit(self.sprites["cleft"],(0,0))
+        w = self.get_width()
+        # pygame.draw.polygon(self.original_surface,(0,0,222),((0,0),(w,0),(w,w),(0,w)),1)
+        self.update_surface()
+
+        self.velocity = pygame.Vector2(0, 0)
+        self.speed = 0.3
+        self.direction = 0
+    
+        self.lasers = []
+
+        self.blocked_key = []
+
+        self.controlled = True
+
+        self.sound = sound
