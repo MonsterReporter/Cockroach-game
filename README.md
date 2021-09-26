@@ -9,6 +9,7 @@ You need pygame and python to play this game.
 to change how large or small will be the game use settings.txt file in the GAME directory.
 
 # goal : kill the cockroachs
+and don't get hit by the green projectile.
 
 # Controls
 wasd to move around the mouse
