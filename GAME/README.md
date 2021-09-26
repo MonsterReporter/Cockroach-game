@@ -12,6 +12,7 @@ Then you click on a postion of the screen to place this selected object.
 
 Space + 1 to 7 : tiles , 
 Space + p : player
+space + o : enemie
 
 When you selected a tile you can
 

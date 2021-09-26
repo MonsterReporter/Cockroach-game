@@ -74,6 +74,9 @@ class Manager:
         #     self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
         #     self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
 
+        self.loading = pygame.image.load(f'textures/loading.png')
+        self.loading = pygame.transform.scale(self.loading, Adjuster.get_surface_size((1920,1080)))
+
         self.cover = pygame.image.load(f'textures/cover.png')
         self.cover = pygame.transform.scale(self.cover,Adjuster.get_surface_size((1920,1080)))
 
@@ -270,7 +273,9 @@ class Manager:
             if event.type == self.TRANSITION:
                 self.screenstate = self.transition_endstate
 
-        self.SCREEN.fill((255, 0, 0))
+        self.SCREEN.fill((255,190,168))
+
+        self.SCREEN.blit(self.loading,(0,0))
 
         pygame.display.update()
 
