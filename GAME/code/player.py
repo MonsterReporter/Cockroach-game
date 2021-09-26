@@ -5,7 +5,7 @@ from surface import Surface
 from laser import Laser
 
 class Player(Surface):
-    def __init__(self, display, position,Cavemen):
+    def __init__(self, display, position,Cavemen,Bow):
         super().__init__(display, position, (Cavemen["caveman up"].get_width()))
 
         self.Cavemen = Cavemen
@@ -24,9 +24,7 @@ class Player(Surface):
 
         self.controlled = True
 
-        self.collsion_box = get_surface(self.DISPLAY,self.position.xy,self.get_width())
-
-        self.box = self.collsion_box.get_rect()
+        self.Bow = Surface(self.DISPLAY,self.position)
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -88,9 +86,3 @@ class Player(Surface):
 
         else:
             self.rotate()
-
-
-def get_surface(display, position,size):
-    surface = Surface(display,position,size)
-    surface.update_surface()
-    return surface
