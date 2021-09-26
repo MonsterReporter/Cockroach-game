@@ -218,13 +218,13 @@ class Manager:
 
         try:
             if pressed["Intense"]:
-                web.open("https://github.com/")
+                web.open("https://github.com/ItsIntense/")
         except:
             pass
 
         try:
             if pressed["MonsterReporter"]:
-                web.open("https://github.com/")
+                web.open("https://github.com/MonsterReporter")
         except:
             pass
 
@@ -271,6 +271,8 @@ class Manager:
         pygame.mixer.fadeout(20)
         if state == "main_menu":
             self.main3.play(loops=100000)
+        if state == "credits":
+            self.main.play(loops=100000)
         if state == "game_loop":
             self.overworld.play(loops=100000)
 
