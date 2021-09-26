@@ -11,7 +11,7 @@ class Player(Surface):
         self.Cavemen = Cavemen
         self.original_surface.blit(Cavemen["caveman up"],(0,0))
         w = self.get_width()
-        pygame.draw.polygon(self.original_surface,(0,0,222),((0,0),(w,0),(w,w),(0,w)),1)
+        # pygame.draw.polygon(self.original_surface,(0,0,222),((0,0),(w,0),(w,w),(0,w)),1)
         self.update_surface()
 
         self.velocity = pygame.Vector2(0, 0)

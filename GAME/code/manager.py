@@ -59,19 +59,20 @@ class Manager:
 
 
         #import textures
-        self.Cavemen = {}
-        for file in os.listdir(path="textures/cavemen"):
-            self.Cavemen[file.replace(".png","")] = pygame.image.load(f'textures/cavemen/{file}')
-            self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adjuster.get_surface_size((80,60)))
-        self.Bow = []
-        self.Bow.append(pygame.image.load(f'textures/bows/bow3.png'))
-        self.Bow.append(pygame.image.load(f'textures/bows/arrow.png'))
-        self.Bow[0] = pygame.transform.scale(self.Bow[0], Adjuster.get_surface_size((39,21)))
-        self.Bow[1] = pygame.transform.scale(self.Bow[1], Adjuster.get_surface_size((15,24)))
+        # self.Cavemen = {}
+        # for file in os.listdir(path="textures/cavemen"):
+        #     self.Cavemen[file.replace(".png","")] = pygame.image.load(f'textures/cavemen/{file}')
+        #     self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adjuster.get_surface_size((80,60)))
+        # self.Bow = []
+        # self.Bow.append(pygame.image.load(f'textures/bows/bow3.png'))
+        # self.Bow.append(pygame.image.load(f'textures/bows/arrow.png'))
+        # self.Bow[0] = pygame.transform.scale(self.Bow[0], Adjuster.get_surface_size((39,21)))
+        # self.Bow[1] = pygame.transform.scale(self.Bow[1], Adjuster.get_surface_size((15,24)))
 
         self.Cockroach = {}
         for file in os.listdir(path="textures/cockroach"):
             self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
+            self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
 
         self.cover = pygame.image.load(f'textures/cover.png')
         self.cover = pygame.transform.scale(self.cover,Adjuster.get_surface_size((1920,1080)))
@@ -96,10 +97,10 @@ class Manager:
         self.main = pygame.mixer.Sound("music/main.mp3")
         self.main3 = pygame.mixer.Sound("music/main.wav")
         self.overworld = pygame.mixer.Sound("music/Overworld.wav")
-        self.walk = pygame.mixer.Sound("music/walk.wav")
-        self.walk2 = pygame.mixer.Sound("music/walk2.wav")
-        self.arrow_hit = pygame.mixer.Sound("music/arrow_hit.wav")
-        self.arrow_shoot = pygame.mixer.Sound("music/arrow_shoot.wav")
+        # self.walk = pygame.mixer.Sound("music/walk.wav")
+        # self.walk2 = pygame.mixer.Sound("music/walk2.wav")
+        # self.arrow_hit = pygame.mixer.Sound("music/arrow_hit.wav")
+        # self.arrow_shoot = pygame.mixer.Sound("music/arrow_shoot.wav")
 
         #Starting up
         self.transition_to("main_menu")
