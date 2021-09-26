@@ -3,7 +3,7 @@ def main():
 
     import sys
     import os
-    sys.path.append(os.path.join(os.getcwd(),"code")) 
+    sys.path.append(os.path.join(os.getcwd(),"code"))
 
     # from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE
     import screener

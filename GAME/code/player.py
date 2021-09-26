@@ -24,13 +24,25 @@ class Player(Surface):
 
         self.controlled = True
 
+        # draw bow
         self.Bow = Surface(self.surface,self.position,Bow[0].get_width())
 
-        self.Bow.position.xy = (self.get_half()[0],0)
-        self.Bow.position.xy 
+        self.Bow.position.xy = (self.get_width() * 3 / 4 ,0)
         self.Bow.original_surface.blit(Bow[0],(0,0))
         self.Bow.update_surface()
-        print(self.Bow.position.xy)
+
+        self.original_surface.blit(self.Bow.surface,(self.get_half()[0] ,0))
+
+        self.original_surface.blit(Cavemen["caveman up"],(0,0))
+
+        self.update_surface()
+
+        #setup arrow
+        self.Arrow = Bow[1]
+        self.arrow = Surface(self.surface,self.position,self.Arrow.get_width(),height = self.Arrow.get_height())
+        self.arrow.original_surface.blit(self.Arrow,(0,0))
+        self.arrow.update_surface()
+        self.arrow.position.xy = (self.get_width() * 3 / 4 ,0)
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -95,15 +107,16 @@ class Player(Surface):
         x = self.position.x + x
         y = self.position.y + y
 
-        if wall.get_rect().collidepoint(x,y):
-            self.block_key(key[0])
+        try:
+            if wall.get_rect().collidepoint(x,y):
+                self.block_key(key[0])
 
-            keys = pygame.key.get_pressed()
-            if not keys[key[1]] and not keys[key[2]] and not keys[key[3]]:
-                self.stop_velocity_x()
-                self.stop_velocity_y()
-
-        return wall
+                keys = pygame.key.get_pressed()
+                if not keys[key[1]] and not keys[key[2]] and not keys[key[3]]:
+                    self.stop_velocity_x()
+                    self.stop_velocity_y()
+        except:
+            pass
 
     def collision(self,walls):
         for wall in walls:
@@ -112,16 +125,29 @@ class Player(Surface):
             wall = self.ray(wall,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
             wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
+    def hold_arrow(self):
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONUP:
+                if pygame.mouse.get_pressed()[0]:
+                    self.arrow.draw()
+
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                self.update_surface()
+                self.lasers.append(Laser(self.DISPLAY, (self.position.x + self.get_width() * 3 / 4 ,self.position.y), self.direction,self.Arrow))
+
+
+
     def update(self,walls = []):
         if self.controlled:
 
             for laser in self.lasers:
-                laser.update(walls)
                 laser.draw()
-
-            self.Bow.draw()
+                if laser.update(walls):
+                    self.lasers.pop(self.lasers.index(laser))
+                
 
             self.collision(walls)
+            self.hold_arrow()
 
             self.rotate()
             self.move()
