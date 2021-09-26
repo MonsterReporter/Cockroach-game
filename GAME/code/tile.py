@@ -84,7 +84,29 @@ class Tile(Surface):
             elif rect.centery < self_rect.centery:
                 rect.centery -= self_rect.width + rect.width - distance
 
-        return rect
+    def ray(self,player,add,key):
+
+        x = (math.cos(player.direction) + add) * 30
+        y = (math.sin(player.direction) + add) * 30
+        while True:
+            if x < player.get_width() + player.get_width() * 0.01 or y < player.get_width() + player.get_width() * 0.01:
+                break 
+            else:
+                x /= 1.02
+                y /= 1.02
+
+        x = player.position.x + x
+        y = player.position.y + y
+
+        if self.get_rect().collidepoint(x,y):
+            player.block_key(key[0])
+
+            keys = pygame.key.get_pressed()
+            if not keys[key[1]] and not keys[key[2]] and not keys[key[3]]:
+                player.stop_velocity_x()
+                player.stop_velocity_y()
+
+        return player
 
     def update(self ,player):
         if self.get_wall():
@@ -154,15 +176,11 @@ class Tile(Surface):
 
                 # player.position.xy = rect.center
             
-            x = player.position.x + math.cos(player.direction) * 30 / self.DISPLAY_WIDTH * 1920
-            y = player.position.y + math.sin(player.direction) * 30 / self.DISPLAY_WIDTH * 1920
-            if self.get_rect().collidepoint(x,y):
-                player.block_key(pygame.K_w)
+                player = self.ray(player,0,[pygame.K_w,pygame.K_s,pygame.K_a,pygame.K_d])
+                player = self.ray(player,math.radians(180),[pygame.K_s,pygame.K_w,pygame.K_a,pygame.K_d])
+                player = self.ray(player,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
+                player = self.ray(player,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
-                keys = pygame.key.get_pressed()
-                if not keys[pygame.K_s] and not keys[pygame.K_a] and not keys[pygame.K_d]:
-                    player.stop_velocity_x()
-                    player.stop_velocity_y()
 
 
 

@@ -54,13 +54,13 @@ class Player(Surface):
         if keys[pygame.K_w] and not pygame.K_w in self.blocked_key:
             self.velocity.x += math.cos(self.direction)
             self.velocity.y += math.sin(self.direction)
-        elif keys[pygame.K_s]:
+        elif keys[pygame.K_s] and not pygame.K_s in self.blocked_key:
             self.velocity.x += math.cos(self.direction + math.radians(180)) 
             self.velocity.y += math.sin(self.direction + math.radians(180))
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and not pygame.K_a in self.blocked_key:
             self.velocity.x += math.cos(self.direction - math.radians(90))
             self.velocity.y += math.sin(self.direction - math.radians(90))
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] and not pygame.K_d in self.blocked_key:
             self.velocity.x += math.cos(self.direction + math.radians(90))
             self.velocity.y += math.sin(self.direction + math.radians(90))
 
