@@ -19,18 +19,23 @@ class enemy_manager():
             output.append(enem)
         return output
 
+    def get_enemies_all(self):
+        return self.Enemies
+
     def clear(self):
         self.Enemies = {"cockroach":[]}
 
     def clear_type(self,Type):
         self.Enemies[Type].clear()
 
-    def remove(self,x,y):
+    def remove(self,pos):
         output = []
         for Type in list(self.Enemies.keys()):
             for enem in self.Enemies[Type]:
-                if enem.position.xy == (x,y):
+
+                if enem.get_rect().collidepoint(pos):
                     self.Enemies[Type].pop(self.Enemies[Type].index(enem))
+                    # print("rm:",pos)
                     break
 
     def get_count(self):
@@ -42,8 +47,12 @@ class enemy_manager():
     def update(self,walls,player_pos):
         for Type in list(self.Enemies.keys()):
             for enem in self.Enemies[Type]:
-                enem.update(walls,player_pos)
+
+                if enem.update(walls,player_pos):
+                    self.Enemies[Type].pop(self.Enemies[Type].index(enem))
+
                 enem.draw()
+
     def add_Enemie(self,display,Type,position,active):
         if Type == "cockroach":
             self.Enemies[Type].append(cockroach(display,position,self.Enemie1["cup"].get_size(),self.Enemie1,active))
@@ -79,11 +88,11 @@ class cockroach(Surface):
         if self.collided:
             mx = self.turn.x
             my = self.turn.y
-            print(self.direction)
+            # print(self.direction)
             self.direction = -math.degrees(math.atan2(my - self.position.y, mx - self.position.x))
             self.surface = pygame.transform.rotate(self.original_surface, self.direction - 90)
             self.collided = False
-            print(self.direction)
+            # print(self.direction)
             # print(self.position.xy, mx , my)
 
         else:
@@ -160,10 +169,12 @@ class cockroach(Surface):
             self.rotate()
             self.move()
 
+            if self.position.x > self.DISPLAY_WIDTH or self.position.y > self.DISPLAY_HEIGHT \
+                or self.position.x < 0 or self.position.y < 0:
+                # print("gone")
+                return True
+
         else:
             self.rotate()
-
-            if self.position.xy > (self.DISPLAY_WIDTH , self.DISPLAY_HEIGHT) or self.position.xy < (0,0):
-                return True
 
         return False

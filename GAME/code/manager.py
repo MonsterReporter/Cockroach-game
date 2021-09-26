@@ -122,7 +122,7 @@ class Manager:
             if  (pygame.key.get_pressed()[pygame.K_ESCAPE]):
                 self.transition_to("main_menu")
 
-        self.Level_Importer.update()
+        if self.Level_Importer.update(): self.transition_to("game")
         self.Level_Importer.draw()
 
         pygame.display.update()

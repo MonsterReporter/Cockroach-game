@@ -144,12 +144,14 @@ class Player(Surface):
 
 
 
-    def update(self,walls = []):
+    def update(self,walls = [],enemies = {}):
         if self.controlled:
+            cords = None
 
             for laser in self.lasers:
                 laser.draw()
-                if laser.update(walls):
+                boolen ,cords = laser.update(walls,enemies)
+                if boolen:
                     self.lasers.pop(self.lasers.index(laser))
                 
 
@@ -161,6 +163,8 @@ class Player(Surface):
             self.move()
 
             self.clear_blocked_keys()
+
+            return cords
 
         else:
             self.rotate()

@@ -17,18 +17,27 @@ class Laser(Surface):
         self.speed = 8
 
         self.sound = sound
+
+        self.collision_point = (0,0)
     
     def move(self):
         self.position.x += math.cos(self.direction) * self.speed
         self.position.y += math.sin(self.direction) * self.speed
 
-    def update(self,walls):
+    def update(self,walls,enemies):
         self.move()
         for wall in walls:
             if self.ray(wall):
                 if self.sound != None :self.sound.play()
-                return True
-        return False
+                return True , None
+
+        for Type in list(enemies.keys()):
+            for enem in enemies[Type]:
+                if self.ray(enem):
+                    if self.sound != None :self.sound.play()
+                    enem.position.x
+                    return True , self.collision_point
+        return False , None
 
     def ray(self,wall):
 
@@ -48,5 +57,6 @@ class Laser(Surface):
         y = self.position.y + y
 
         if wall.get_rect().collidepoint(x,y):
+            self.collision_point = (x,y)
             return True
         return False

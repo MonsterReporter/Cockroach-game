@@ -72,6 +72,10 @@ class level_importer(Surface):
 
         self.selected = "" 
 
+        self.start_ticks=pygame.time.get_ticks()
+        self.sec = 0
+        self.wait = False
+
     def save(self):
         with open(f"levels/player_save.txt","wb") as fp:
             pickle.dump(self.Level, fp)
@@ -131,5 +135,20 @@ class level_importer(Surface):
         self.Tile_Manager.update(self.player)
         self.Menu_Manager.update()
         self.Enemy_Manager.update(self.Tile_Manager.get_walls(),self.player.position.xy)
-        self.player.update(self.Tile_Manager.get_walls())
+        cords = self.player.update(walls = self.Tile_Manager.get_walls(), enemies = self.Enemy_Manager.get_enemies_all())
         self.player.draw()
+
+        if cords != None:
+            self.Enemy_Manager.remove(cords)
+
+
+        if self.Enemy_Manager.get_count() == 0:
+            self.start_ticks=pygame.time.get_ticks()
+            self.sec = 5
+            self.wait = True
+            return True
+
+        # if self.sec < (pygame.time.get_ticks()-self.start_ticks)/1000 and self.wait:
+        #     return True
+
+        return False
