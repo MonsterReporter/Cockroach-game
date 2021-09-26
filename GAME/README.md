@@ -8,12 +8,16 @@ You can also change what levels are loaded when pressing play button with level_
 
 # Controls 
 You select the obejct you want to place. 
-Then you clikc on the postion on the screen to place this selected object.
-Ctr + 1 to 7 : tiles 
-Ctr + p : player
+Then you click on the postion on the screen to place this selected object.
+Space + 1 to 7 : tiles 
+Space + p : player
 
 When you selected a tile you can
 
-fill the level : Ctr + f
-fill the boarder : Ctr + b
+fill the level : Space + f
+fill the boarder : Space + b
+
+To delete something right click on the center of the object.
+
+Backspace is exit without saving.
 

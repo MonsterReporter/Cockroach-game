@@ -127,7 +127,7 @@ class level_creator(Surface):
         pos_r = self.Adjuster.get_surface_size_reverse((pos))
         # pygame.draw.rect(self.surface, (255,0,0), pygame.Rect(pos[0],pos[1],20,20))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_1]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_1]:
             if not "1" in self.buttons_pressed:
                 self.button_pressed("1")
                 self.buttons_pressed.append("1")
@@ -135,7 +135,7 @@ class level_creator(Surface):
             if "1" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("1"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_2]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_2]:
             if not "2" in self.buttons_pressed:
                 self.button_pressed("2")
                 self.buttons_pressed.append("2")
@@ -143,7 +143,7 @@ class level_creator(Surface):
             if "2" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("2"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_3]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_3]:
             if not "3" in self.buttons_pressed:
                 self.button_pressed("3")
                 self.buttons_pressed.append("3")
@@ -151,7 +151,7 @@ class level_creator(Surface):
             if "3" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("3"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_4]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_4]:
             if not "4" in self.buttons_pressed:
                 self.button_pressed("4")
                 self.buttons_pressed.append("4")
@@ -159,7 +159,7 @@ class level_creator(Surface):
             if "4" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("4"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_5]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_5]:
             if not "5" in self.buttons_pressed:
                 self.button_pressed("5")
                 self.buttons_pressed.append("5")
@@ -167,7 +167,7 @@ class level_creator(Surface):
             if "5" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("5"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_6]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_6]:
             if not "6" in self.buttons_pressed:
                 self.button_pressed("6")
                 self.buttons_pressed.append("6")
@@ -175,7 +175,7 @@ class level_creator(Surface):
             if "6" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("6"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_7]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_7]:
             if not "7" in self.buttons_pressed:
                 self.button_pressed("7")
                 self.buttons_pressed.append("7")
@@ -185,7 +185,7 @@ class level_creator(Surface):
 
 
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_p]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_p]:
             if not "p" in self.buttons_pressed:
                 self.button_pressed("p")
                 self.buttons_pressed.append("p")
@@ -193,7 +193,7 @@ class level_creator(Surface):
             if "p" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("p"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_f]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_f]:
             if not "f" in self.buttons_pressed:
                 try:
                     int(self.selected)
@@ -212,7 +212,7 @@ class level_creator(Surface):
             if "f" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("f"))
 
-        if keys[pygame.K_LCTRL] and keys[pygame.K_b]:
+        if keys[pygame.K_SPACE] and keys[pygame.K_b]:
             if not "b" in self.buttons_pressed:
                 try:
                     int(self.selected)
