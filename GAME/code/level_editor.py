@@ -13,6 +13,8 @@ from main_menu import *
 
 from player import Player
 
+from enemies import enemy_manager
+
 class level_creator(Surface):
     def __init__(self, SCREEN):
         super().__init__(SCREEN, SCREEN.get_rect().center, SCREEN.get_width(),height = SCREEN.get_height())
@@ -46,6 +48,14 @@ class level_creator(Surface):
         names = ["ice","stone","sand","snow","grass","coble","stump"]
         for name in names:
             self.Tile_Manager.add_sprite(name,Adjuster)
+
+        #seting up enemy manager
+        self.Cockroach = {}
+        for file in os.listdir(path="textures/cockroach"):
+            self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
+            self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
+
+        self.Enemy_Manager = enemy_manager(self.surface,self.Cockroach)
 
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
@@ -84,6 +94,7 @@ class level_creator(Surface):
         self.Menu_Manager.remove_all_buttons()
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
+        self.Enemy_Manager.clear()
 
 
     def load(self,level_name):
@@ -105,12 +116,19 @@ class level_creator(Surface):
             print("error tile")
 
         try:
+            for enem in self.Level["enemies"]:
+                self.Enemy_Manager.add_Enemie(self.surface,enem[1],self.Adjuster.get_surface_size(enem[2]),False)
+
+        except:
+            print('error enemie')
+
+        try:
             for player in self.Level["player"]:
                 self.player =  Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen,self.Bow,self.sound)
                 self.player.controlled = False
 
         except:
-            print('error tile')
+            print('error player')
 
         print("import ended")
 
@@ -123,6 +141,7 @@ class level_creator(Surface):
 
         #update classes
         self.Tile_Manager.update(self.player)
+        self.Enemy_Manager.update(self.Tile_Manager.get_walls(),self.player.position.xy)
         self.Menu_Manager.update()
         self.player.update()
 
@@ -199,6 +218,14 @@ class level_creator(Surface):
         else:
             if "p" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("p"))
+
+        if keys[pygame.K_SPACE] and keys[pygame.K_o]:
+            if not "o" in self.buttons_pressed:
+                self.button_pressed("o")
+                self.buttons_pressed.append("o")
+        else:
+            if "o" in self.buttons_pressed:
+                self.buttons_pressed.pop(self.buttons_pressed.index("o"))
 
         if keys[pygame.K_SPACE] and keys[pygame.K_f]:
             if not "f" in self.buttons_pressed:
@@ -317,6 +344,10 @@ class level_creator(Surface):
         if "p" == key:
             self.Level["player"].append([pos_r])
             self.player.position[0],self.player.position[1] = pos[0],pos[1]
+
+        if "o" == key:
+            self.Level['enemies'].append(["DISPLAY","cockroach",pos_r,True])
+            self.Enemy_Manager.add_Enemie(self.surface,"cockroach",pos,False)
 
     def button_pressed(self, key):
         self.selected = key

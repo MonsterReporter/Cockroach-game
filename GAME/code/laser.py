@@ -26,7 +26,7 @@ class Laser(Surface):
         self.move()
         for wall in walls:
             if self.ray(wall):
-                self.sound.play()
+                if self.sound != None :self.sound.play()
                 return True
         return False
 

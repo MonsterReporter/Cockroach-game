@@ -13,6 +13,8 @@ from main_menu import *
 
 from player import Player
 
+from enemies import enemy_manager
+
 class level_importer(Surface):
     def __init__(self, SCREEN):
         super().__init__(SCREEN, SCREEN.get_rect().center, SCREEN.get_width(),height = SCREEN.get_height())
@@ -47,6 +49,14 @@ class level_importer(Surface):
         for name in names:
             self.Tile_Manager.add_sprite(name,Adjuster)
 
+        #seting up enemy manager
+        self.Cockroach = {}
+        for file in os.listdir(path="textures/cockroach"):
+            self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
+            self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
+
+        self.Enemy_Manager = enemy_manager(self.surface,self.Cockroach)
+
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
         self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((60,24))[0])
@@ -72,6 +82,7 @@ class level_importer(Surface):
         self.Menu_Manager.remove_all_buttons()
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
+        self.Enemy_Manager.clear()
 
     def load(self):
 
@@ -80,6 +91,7 @@ class level_importer(Surface):
         self.Menu_Manager.remove_all_buttons()
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
+        self.Enemy_Manager.clear()
 
         with open("levels/level_list.txt","r") as num:
             level_name = choice(num.read().split("\n"))
@@ -93,6 +105,13 @@ class level_importer(Surface):
 
         except:
             print("error tile")
+
+        try:
+            for enem in self.Level["enemies"]:
+                self.Enemy_Manager.add_Enemie(self.surface,enem[1],self.Adjuster.get_surface_size(enem[2]),enem[3])
+
+        except:
+            print('error enemie')
 
         try:
             for player in self.Level["player"]:
@@ -111,5 +130,6 @@ class level_importer(Surface):
         #update classes
         self.Tile_Manager.update(self.player)
         self.Menu_Manager.update()
+        self.Enemy_Manager.update(self.Tile_Manager.get_walls(),self.player.position.xy)
         self.player.update(self.Tile_Manager.get_walls())
         self.player.draw()

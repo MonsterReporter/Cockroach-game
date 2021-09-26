@@ -38,13 +38,13 @@ class Manager:
         self.screenstate = self.screenstates["main_menu"]
 
         #seting up the tile manager
-        self.Tile_Manager = tile_manager({})
-        names = ["ice","stone","sand","snow","grass","coble","stump"]
-        for name in names:
-            self.Tile_Manager.add_sprite(name,Adjuster)
+        # self.Tile_Manager = tile_manager({})
+        # names = ["ice","stone","sand","snow","grass","coble","stump"]
+        # for name in names:
+        #     self.Tile_Manager.add_sprite(name,Adjuster)
 
         #testing tiles.
-        self.Tile_Manager.add_tile(self.SCREEN,Adjuster.get_surface_size((100,100)),"ice",True)
+        # self.Tile_Manager.add_tile(self.SCREEN,Adjuster.get_surface_size((100,100)),"ice",True)
 
         #setting up the main_menu.
         self.Menu_Manager = menu_manager()
@@ -69,10 +69,10 @@ class Manager:
         # self.Bow[0] = pygame.transform.scale(self.Bow[0], Adjuster.get_surface_size((39,21)))
         # self.Bow[1] = pygame.transform.scale(self.Bow[1], Adjuster.get_surface_size((15,24)))
 
-        self.Cockroach = {}
-        for file in os.listdir(path="textures/cockroach"):
-            self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
-            self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
+        # self.Cockroach = {}
+        # for file in os.listdir(path="textures/cockroach"):
+        #     self.Cockroach[file.replace(".png","")] = pygame.image.load(f'textures/cockroach/{file}')
+        #     self.Cockroach[file.replace(".png","")] = pygame.transform.scale(self.Cockroach[file.replace(".png","")], Adjuster.get_surface_size((57,66)))
 
         self.cover = pygame.image.load(f'textures/cover.png')
         self.cover = pygame.transform.scale(self.cover,Adjuster.get_surface_size((1920,1080)))
