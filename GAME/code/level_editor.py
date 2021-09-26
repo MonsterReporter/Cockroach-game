@@ -28,6 +28,12 @@ class level_creator(Surface):
             self.Cavemen[file.replace(".png","")] = pygame.image.load(f'textures/cavemen/{file}')
             self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adjuster.get_surface_size((80,60)))
 
+        self.Bow = []
+        self.Bow.append(pygame.image.load(f'textures/bows/bow3.png'))
+        self.Bow.append(pygame.image.load(f'textures/bows/arrow.png'))
+        self.Bow[0] = pygame.transform.scale(self.Bow[0], Adjuster.get_surface_size((39,21)))
+        self.Bow[1] = pygame.transform.scale(self.Bow[1], Adjuster.get_surface_size((15,24)))
+
         #seting up the tile manager
         self.Tile_Manager = tile_manager({})
         names = ["ice","stone","sand","snow","grass","coble","stump"]
@@ -38,7 +44,7 @@ class level_creator(Surface):
         self.Menu_Manager = menu_manager()
         self.font = pygame.font.Font("freesansbold.ttf", Adjuster.get_surface_size((60,24))[0])
 
-        self.player = Player(self.surface, self.get_rect().center,self.Cavemen)
+        self.player = Player(self.surface, self.get_rect().center,self.Cavemen,self.Bow)
         self.player.controlled = False
 
         self.player.position[0] = 10000
@@ -93,7 +99,7 @@ class level_creator(Surface):
 
         try:
             for player in self.Level["player"]:
-                self.player =  Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen)
+                self.player =  Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen,self.Bow)
                 self.player.controlled = False
 
         except:
@@ -109,7 +115,7 @@ class level_creator(Surface):
         self.surface.fill((0, 0, 1))
 
         #update classes
-        self.player = self.Tile_Manager.update(self.player)
+        self.Tile_Manager.update(self.player)
         self.Menu_Manager.update()
         self.player.update()
 

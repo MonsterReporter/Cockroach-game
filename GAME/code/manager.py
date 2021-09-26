@@ -54,7 +54,7 @@ class Manager:
         self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
         self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
         self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
-        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+        self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
 
 
 
@@ -63,6 +63,11 @@ class Manager:
         for file in os.listdir(path="textures/cavemen"):
             self.Cavemen[file.replace(".png","")] = pygame.image.load(f'textures/cavemen/{file}')
             self.Cavemen[file.replace(".png","")] = pygame.transform.scale(self.Cavemen[file.replace(".png","")], Adjuster.get_surface_size((80,60)))
+        self.Bow = []
+        self.Bow.append(pygame.image.load(f'textures/bows/bow3.png'))
+        self.Bow.append(pygame.image.load(f'textures/bows/arrow.png'))
+        self.Bow[0] = pygame.transform.scale(self.Bow[0], Adjuster.get_surface_size((39,21)))
+        self.Bow[1] = pygame.transform.scale(self.Bow[1], Adjuster.get_surface_size((15,24)))
 
         self.Cockroach = {}
         for file in os.listdir(path="textures/cockroach"):
@@ -79,7 +84,7 @@ class Manager:
 
         #load player
 
-        self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
+        self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen,self.Bow)
 
         #setup transtions
         self.transition_endstate = None
@@ -162,7 +167,7 @@ class Manager:
 
         except:
             self.Menu_Manager.remove_all_labels()
-            self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+            self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
 
         try:
             if pressed["credits"]:
@@ -190,7 +195,7 @@ class Manager:
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
 
 
@@ -205,7 +210,7 @@ class Manager:
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
+                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
         except:
             pass

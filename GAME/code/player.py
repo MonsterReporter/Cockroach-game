@@ -24,7 +24,13 @@ class Player(Surface):
 
         self.controlled = True
 
-        self.Bow = Surface(self.DISPLAY,self.position)
+        self.Bow = Surface(self.surface,self.position,Bow[0].get_width())
+
+        rect = Cavemen["caveman up"].get_rect().center = self.position.xy
+
+        self.Bow.position.xy = self.get_rect().topright
+        self.Bow.original_surface.blit(Bow[0],(0,0))
+        self.Bow.update_surface()
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -72,12 +78,50 @@ class Player(Surface):
 
         self.position += (self.velocity * self.speed)
 
-    def update(self):
+    def ray(self,wall,add,key):
+
+        x = (math.cos(self.direction) + add) * 30
+        y = (math.sin(self.direction) + add) * 30
+
+        width = self.get_width()
+
+        while True:
+            if x < width + width * 0.01 or y < width + width * 0.01:
+                break 
+            else:
+                x /= 1.02
+                y /= 1.02
+
+        x = self.position.x + x
+        y = self.position.y + y
+
+        if wall.get_rect().collidepoint(x,y):
+            self.block_key(key[0])
+
+            keys = pygame.key.get_pressed()
+            if not keys[key[1]] and not keys[key[2]] and not keys[key[3]]:
+                self.stop_velocity_x()
+                self.stop_velocity_y()
+
+        return wall
+
+    def collision(self,walls):
+        for wall in walls:
+            wall = self.ray(wall,0,[pygame.K_w,pygame.K_s,pygame.K_a,pygame.K_d])
+            wall = self.ray(wall,math.radians(180),[pygame.K_s,pygame.K_w,pygame.K_a,pygame.K_d])
+            wall = self.ray(wall,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
+            wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
+
+    def update(self,walls = []):
         if self.controlled:
 
             for laser in self.lasers:
-                laser.update()
+                laser.update(walls)
                 laser.draw()
+
+            self.Bow.draw()
+
+            self.collision(walls)
 
             self.rotate()
             self.move()
