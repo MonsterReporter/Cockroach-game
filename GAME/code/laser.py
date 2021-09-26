@@ -10,7 +10,8 @@ class Laser(Surface):
         self.original_surface.blit(arrow,(0,0))
         self.update_surface()
 
-        self.surface = pygame.transform.rotate(self.original_surface, direction - 90)
+        self.original_surface = pygame.transform.rotate(self.original_surface, -math.degrees(direction) + 90)
+        self.update_surface()
 
         self.direction = direction
         self.speed = 8

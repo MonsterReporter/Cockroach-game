@@ -70,18 +70,17 @@ class Player(Surface):
         if keys[pygame.K_w] and not pygame.K_w in self.blocked_key:
             self.velocity.x += math.cos(self.direction)
             self.velocity.y += math.sin(self.direction)
-        elif keys[pygame.K_s] and not pygame.K_s in self.blocked_key:
-            self.velocity.x += math.cos(self.direction + math.radians(180)) 
-            self.velocity.y += math.sin(self.direction + math.radians(180))
-        if keys[pygame.K_a] and not pygame.K_a in self.blocked_key:
-            self.velocity.x += math.cos(self.direction - math.radians(90))
-            self.velocity.y += math.sin(self.direction - math.radians(90))
-        elif keys[pygame.K_d] and not pygame.K_d in self.blocked_key:
-            self.velocity.x += math.cos(self.direction + math.radians(90))
-            self.velocity.y += math.sin(self.direction + math.radians(90))
+        # elif keys[pygame.K_s] and not pygame.K_s in self.blocked_key:
+        #     self.velocity.x += math.cos(self.direction + math.radians(180)) 
+        #     self.velocity.y += math.sin(self.direction + math.radians(180))
+        # if keys[pygame.K_a] and not pygame.K_a in self.blocked_key:
+        #     self.velocity.x += math.cos(self.direction - math.radians(90))
+        #     self.velocity.y += math.sin(self.direction - math.radians(90))
+        # elif keys[pygame.K_d] and not pygame.K_d in self.blocked_key:
+        #     self.velocity.x += math.cos(self.direction + math.radians(90))
+        #     self.velocity.y += math.sin(self.direction + math.radians(90))
 
-
-        self.velocity /= 1.02
+        self.velocity /= 1.1
 
         if self.velocity.x > -0.3 and self.velocity.x < 0.3:
             self.velocity.x = 0
@@ -121,9 +120,9 @@ class Player(Surface):
     def collision(self,walls):
         for wall in walls:
             wall = self.ray(wall,0,[pygame.K_w,pygame.K_s,pygame.K_a,pygame.K_d])
-            wall = self.ray(wall,math.radians(180),[pygame.K_s,pygame.K_w,pygame.K_a,pygame.K_d])
-            wall = self.ray(wall,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
-            wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
+            # wall = self.ray(wall,math.radians(180),[pygame.K_s,pygame.K_w,pygame.K_a,pygame.K_d])
+            # wall = self.ray(wall,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
+            # wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
     def hold_arrow(self):
         for event in pygame.event.get():
@@ -132,8 +131,9 @@ class Player(Surface):
                     self.arrow.draw()
 
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                
                 self.update_surface()
-                self.lasers.append(Laser(self.DISPLAY, (self.position.x + self.get_width() * 3 / 4 ,self.position.y), self.direction,self.Arrow))
+                self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow))
 
 
 

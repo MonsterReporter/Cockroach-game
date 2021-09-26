@@ -1,2 +1,2 @@
-grass_tmp
-snow_tmp
+LEVEL1
+LEVEL1

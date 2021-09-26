@@ -96,6 +96,7 @@ class Manager:
         self.main = pygame.mixer.Sound("music/main.mp3")
         self.main3 = pygame.mixer.Sound("music/main.wav")
         self.overworld = pygame.mixer.Sound("music/Overworld.wav")
+        self.walk = 
 
         #Starting up
         self.transition_to("main_menu")
