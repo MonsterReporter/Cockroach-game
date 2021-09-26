@@ -53,7 +53,7 @@ class Manager:
 
         self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
         self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
-        self.Menu_Manager.add_button(self.SCREEN ,Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
+        self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
         self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
 
 
@@ -77,11 +77,23 @@ class Manager:
         #setting up level_importer
         self.Level_Importer = level_importer(self.SCREEN)
 
+        #load player
+
         self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen)
 
+        #setup transtions
         self.transition_endstate = None
         self.TRANSITION = pygame.USEREVENT + 0
         pygame.time.set_timer(self.TRANSITION, 2000)
+
+        #setup muisc
+        pygame.mixer.init()
+        self.main = pygame.mixer.Sound("music/main.mp3")
+        self.main3 = pygame.mixer.Sound("music/main.wav")
+        self.overworld = pygame.mixer.Sound("music/Overworld.wav")
+
+        #Starting up
+        self.transition_to("main_menu")
 
     def game_transition(self):
         for event in pygame.event.get():
@@ -177,6 +189,7 @@ class Manager:
                 self.Menu_Manager.clear()
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
                 self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
 
@@ -191,6 +204,7 @@ class Manager:
                 self.Menu_Manager.clear()
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
                 self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
+                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
                 self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Cock and roach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
         except:
@@ -254,6 +268,11 @@ class Manager:
         pygame.event.clear(self.TRANSITION)
         self.transition_endstate = self.screenstates[state]
         self.screenstate = self.screenstates["transition"]
+        pygame.mixer.fadeout(20)
+        if state == "main_menu":
+            self.main3.play(loops=100000)
+        if state == "game_loop":
+            self.overworld.play(loops=100000)
 
     def run(self):
         self.screenstate()

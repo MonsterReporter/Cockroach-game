@@ -3,8 +3,8 @@ FullScreen :1
 #Determines whether the game is fullscreen
 
 #Normal screen size
-ScreenSize_x :640
-ScreenSize_y :480
+ScreenSize_x :1920
+ScreenSize_y :1080
 #Determines the screen's size
 #VirusChara - Tried making it more easily readable.
 

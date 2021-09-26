@@ -76,8 +76,7 @@ class level_importer(Surface):
 
         try:
             for tile in self.Level["tile"]:
-                tile[0] = self.surface
-                self.Tile_Manager.add_tile(tile[0],self.Adjuster.get_surface_size(tile[1]),tile[2],tile[3])
+                self.Tile_Manager.add_tile(self.surface,self.Adjuster.get_surface_size(tile[1]),tile[2],tile[3])
 
         except:
             print("error tile")

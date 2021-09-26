@@ -1,3 +1,2 @@
-level7
-level2
-level8
+grass_tmp
+snow_tmp

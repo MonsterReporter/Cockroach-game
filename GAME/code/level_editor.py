@@ -49,6 +49,13 @@ class level_creator(Surface):
 
         self.selected = "" 
 
+        with open("levels/load_level.txt","r") as level:
+            level_name = level.read()
+
+            if level_name != "None":
+                self.load(level_name)
+
+
     def save(self):
         with open("levels/num.txt","r") as num:
             number = int(num.read())
@@ -66,34 +73,31 @@ class level_creator(Surface):
         self.Tile_Manager.remove_all_tiles()
 
 
-    def load(self):
+    def load(self,level_name):
 
         self.Level = {'tile':[],'player':[],'text':[],'enemies':[]}
-        self.player.position.x = 100000
+        self.player.position.x = -100
         self.Menu_Manager.remove_all_buttons()
         self.Menu_Manager.remove_all_labels()
         self.Tile_Manager.remove_all_tiles()
-
-        with open("levels/level_list.txt","r") as num:
-            level_name = choice(num.read())
 
         with open(f"levels/{level_name}.txt","rb") as fp:
             self.Level = pickle.load(fp)
 
         try:
             for tile in self.Level["tile"]:
-                tile[0] = self.surface
-                Menu_Manager.add_tile(tile[0],self.Adjuster.get_surface_size(tile[1]),tile[2],tile[3])
+                self.Tile_Manager.add_tile(self.surface,self.Adjuster.get_surface_size(tile[1]),tile[2],tile[3])
 
         except:
-            print("error")
+            print("error tile")
 
         try:
             for player in self.Level["player"]:
-                self.player = self.player = Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen)
+                self.player =  Player(self.surface,self.Adjuster.get_surface_size(player[0]) ,self.Cavemen)
+                self.player.controlled = False
 
         except:
-            print('error')
+            print('error tile')
 
         print("import ended")
 
@@ -183,6 +187,55 @@ class level_creator(Surface):
             if "p" in self.buttons_pressed:
                 self.buttons_pressed.pop(self.buttons_pressed.index("p"))
 
+        if keys[pygame.K_LCTRL] and keys[pygame.K_f]:
+            if not "f" in self.buttons_pressed:
+                try:
+                    int(self.selected)
+                    times_x = int(self.DISPLAY_WIDTH / int(self.Adjuster.get_surface_size((90,90))[1])) + 1
+                    times_y = int(self.DISPLAY_HEIGHT / int(self.Adjuster.get_surface_size((90,90))[1])) + 1
+                    for x in range(times_x):
+                        for y in range(times_y):
+                            self.mouse_pressed(self.selected,pos = (int(self.Adjuster.get_surface_size((90,90))[0]) * x, \
+                            int(self.Adjuster.get_surface_size((90,90))[1]) * y) )
+
+                except:
+                    pass
+
+                self.buttons_pressed.append("f")
+        else:
+            if "f" in self.buttons_pressed:
+                self.buttons_pressed.pop(self.buttons_pressed.index("f"))
+
+        if keys[pygame.K_LCTRL] and keys[pygame.K_b]:
+            if not "b" in self.buttons_pressed:
+                try:
+                    int(self.selected)
+                    times_x = int(self.DISPLAY_WIDTH / int(self.Adjuster.get_surface_size((90,90))[1])) + 1
+                    times_y = int(self.DISPLAY_HEIGHT / int(self.Adjuster.get_surface_size((90,90))[1])) + 1
+                    #0,y line
+                    for y in range(times_y):
+                        self.mouse_pressed(self.selected,pos = (0,int(self.Adjuster.get_surface_size((90,90))[1]) * y) )
+                    #last,y line
+                    for y in range(times_y):
+                        self.mouse_pressed(self.selected,pos = (self.DISPLAY_WIDTH - int(self.Adjuster.get_surface_size((90,90))[1]) /2 ,\
+                            int(self.Adjuster.get_surface_size((90,90))[1]) * y))
+
+                    #x,0 line
+                    for x in range(times_x):
+                        self.mouse_pressed(self.selected,pos = (int(self.Adjuster.get_surface_size((90,90))[1]) * x,0) )
+                    #last,y line
+                    for y in range(times_x):
+                        self.mouse_pressed(self.selected,pos = (int(self.Adjuster.get_surface_size((90,90))[1]) * x\
+                            , self.DISPLAY_HEIGHT - int(self.Adjuster.get_surface_size((90,90))[1]) * 2 ))
+
+                except:
+                    pass
+
+                self.buttons_pressed.append("b")
+        else:
+            if "b" in self.buttons_pressed:
+                self.buttons_pressed.pop(self.buttons_pressed.index("b"))
+
 
         if pygame.mouse.get_pressed()[0]:
             if not "mouse" in self.buttons_pressed:
@@ -213,9 +266,12 @@ class level_creator(Surface):
                 break
 
 
-    def mouse_pressed(self, key):
-        pos = pygame.mouse.get_pos()
-        pos_r = self.Adjuster.get_surface_size_reverse((pos))
+    def mouse_pressed(self, key,pos = None):
+        if pos == None:
+            pos = pygame.mouse.get_pos()
+            pos_r = self.Adjuster.get_surface_size_reverse((pos))
+        else:
+            pos_r = self.Adjuster.get_surface_size_reverse((pos))
 
         if "1" == key:
             self.Level['tile'].append(["DISPLAY" ,pos_r ,"ice" ,True])
