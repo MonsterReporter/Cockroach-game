@@ -59,6 +59,9 @@ class Player(Surface):
     def clear_blocked_keys(self):
         self.blocked_key.clear()
 
+    def collides(self,pos):
+        return self.get_rect().collidepoint(pos[0],pos[1])
+
     def shoot(self):
         self.lasers.append(Laser(self.DISPLAY, self.position, self.direction))
     

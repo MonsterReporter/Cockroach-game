@@ -70,6 +70,7 @@ class cockroach(Surface):
 
         self.velocity = pygame.Vector2(0, 0)
         self.turn = pygame.Vector2(0,0)
+        self.looking = pygame.Vector2(-200,-200)
         self.speed = 0.3
         self.direction = 0
     
@@ -131,6 +132,7 @@ class cockroach(Surface):
         sx,sy = x,y
         x = self.position.x + x
         y = self.position.y + y
+        self.looking.xy = (x,y)
 
         try:
             if wall.get_rect().collidepoint(x,y):# and self.sec < (pygame.time.get_ticks()-self.start_ticks)/1000:
