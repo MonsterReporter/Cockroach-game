@@ -1,8 +1,10 @@
 # Level Editor
 
-In the main menu press l to access the level editor
+In the main menu press l to access the level editor.
 
-You define what save you load before editing in the load_level.txt file. with only the name of the file. Not the directory or foramt. 
+You define what save you load before editing in the load_level.txt file. with only the name of the file. Not the directory or format.
+
+You can also change what levels are loaded when pressing play button with level_list.txt.
 
 # Controls 
 You select the obejct you want to place. 
