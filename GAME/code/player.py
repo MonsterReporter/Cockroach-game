@@ -5,7 +5,7 @@ from surface import Surface
 from laser import Laser
 
 class Player(Surface):
-    def __init__(self, display, position,Cavemen,Bow):
+    def __init__(self, display, position,Cavemen,Bow,sound):
         super().__init__(display, position, (Cavemen["caveman up"].get_width()))
 
         self.Cavemen = Cavemen
@@ -23,6 +23,8 @@ class Player(Surface):
         self.blocked_key = []
 
         self.controlled = True
+
+        self.sound = sound
 
         # draw bow
         self.Bow = Surface(self.surface,self.position,Bow[0].get_width())
@@ -43,6 +45,8 @@ class Player(Surface):
         self.arrow.original_surface.blit(self.Arrow,(0,0))
         self.arrow.update_surface()
         self.arrow.position.xy = (self.get_width() * 3 / 4 ,0)
+
+        self.mouse_pressed = False
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -67,9 +71,11 @@ class Player(Surface):
         self.direction = -math.radians(self.direction)
 
         keys = pygame.key.get_pressed()
+        self.sound[0].stop()
         if keys[pygame.K_w] and not pygame.K_w in self.blocked_key:
             self.velocity.x += math.cos(self.direction)
             self.velocity.y += math.sin(self.direction)
+            self.sound[0].play()
         # elif keys[pygame.K_s] and not pygame.K_s in self.blocked_key:
         #     self.velocity.x += math.cos(self.direction + math.radians(180)) 
         #     self.velocity.y += math.sin(self.direction + math.radians(180))
@@ -95,7 +101,7 @@ class Player(Surface):
         y = (math.sin(self.direction) + add) * 30
 
         width = self.get_width()
-
+        
         while True:
             if x < width + width * 0.01 or y < width + width * 0.01:
                 break 
@@ -125,15 +131,16 @@ class Player(Surface):
             # wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
     def hold_arrow(self):
-        for event in pygame.event.get():
-            if event.type == pygame.MOUSEBUTTONUP:
-                if pygame.mouse.get_pressed()[0]:
-                    self.arrow.draw()
-
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                
-                self.update_surface()
-                self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow))
+        if self.mouse_pressed and not pygame.mouse.get_pressed()[0]:
+            self.sound[3].play()
+            self.mouse_pressed = False
+            self.update_surface()
+            self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow,self.sound[2]))
+            
+        if pygame.mouse.get_pressed()[0]:
+            if not self.mouse_pressed:
+                self.arrow.draw()
+                self.mouse_pressed = True
 
 
 
@@ -147,6 +154,7 @@ class Player(Surface):
                 
 
             self.collision(walls)
+            self.sound[3].stop()
             self.hold_arrow()
 
             self.rotate()

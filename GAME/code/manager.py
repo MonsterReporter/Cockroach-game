@@ -84,7 +84,7 @@ class Manager:
 
         #load player
 
-        self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen,self.Bow)
+        # self.player = Player(self.SCREEN, self.SCREEN_CENTER,self.Cavemen,self.Bow)
 
         #setup transtions
         self.transition_endstate = None
@@ -96,7 +96,10 @@ class Manager:
         self.main = pygame.mixer.Sound("music/main.mp3")
         self.main3 = pygame.mixer.Sound("music/main.wav")
         self.overworld = pygame.mixer.Sound("music/Overworld.wav")
-        self.walk = 
+        self.walk = pygame.mixer.Sound("music/walk.wav")
+        self.walk2 = pygame.mixer.Sound("music/walk2.wav")
+        self.arrow_hit = pygame.mixer.Sound("music/arrow_hit.wav")
+        self.arrow_shoot = pygame.mixer.Sound("music/arrow_shoot.wav")
 
         #Starting up
         self.transition_to("main_menu")

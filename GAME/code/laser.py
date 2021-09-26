@@ -4,7 +4,7 @@ import math
 from surface import Surface
 
 class Laser(Surface):
-    def __init__(self, display, position, direction, arrow):
+    def __init__(self, display, position, direction, arrow,sound):
         super().__init__(display, position, arrow.get_width(),height = arrow.get_height())
         # pygame.draw.circle(self.original_surface, (255, 255, 255), (4, 4), 4, width=2)
         self.original_surface.blit(arrow,(0,0))
@@ -15,6 +15,8 @@ class Laser(Surface):
 
         self.direction = direction
         self.speed = 8
+
+        self.sound = sound
     
     def move(self):
         self.position.x += math.cos(self.direction) * self.speed
@@ -24,6 +26,7 @@ class Laser(Surface):
         self.move()
         for wall in walls:
             if self.ray(wall):
+                self.sound.play()
                 return True
         return False
 
