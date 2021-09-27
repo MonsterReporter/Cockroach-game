@@ -12,7 +12,7 @@ to change how large or small will be the game use settings.txt file in the GAME 
 and don't get hit by the green projectile.
 
 # Controls
-wasd to move around the mouse
+w to move towards the mouse
 esc to exit.
 press shoot to shoot.
 shoot is left click.
