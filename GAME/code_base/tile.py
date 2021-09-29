@@ -1,7 +1,7 @@
 import pygame
 import math
 from pygame.locals import *
-from surface import Surface
+from code_base.surface import Surface
 
 class tile_manager():
     def __init__(self,sprites):

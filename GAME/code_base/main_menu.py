@@ -1,6 +1,6 @@
 import pygame
 from pygame.locals import *
-from surface import Surface
+from code_base.surface import Surface
 
 class menu_manager():
     def __init__(self):

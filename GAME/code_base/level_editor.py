@@ -5,15 +5,15 @@ from random import choice
 
 import pickle
 
-from setup import adjuster
+from code_base.setup import adjuster
 
-from tile import *
+from code_base.tile import *
 
-from main_menu import *
+from code_base.main_menu import *
 
-from player import Player
+from code_base.player import Player
 
-from enemies import enemy_manager
+from code_base.enemies import enemy_manager
 
 class level_creator(Surface):
     def __init__(self, SCREEN):

@@ -1,7 +1,7 @@
 import pygame
 import math
 
-from surface import Surface
+from code_base.surface import Surface
 
 class Laser(Surface):
     def __init__(self, display, position, direction, arrow,sound):

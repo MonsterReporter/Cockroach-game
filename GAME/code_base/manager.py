@@ -9,13 +9,13 @@ from code_base.setup import adjuster
 
 from code_base.tile import *
 
-from main_menu import *
+from code_base.main_menu import *
 
-from level_editor import *
+from code_base.level_editor import *
 
-from level_importer import *
+from code_base.level_importer import *
 
-from player import Player
+from code_base.player import Player
 
 class Manager:
     def __init__(self, screen, clock):

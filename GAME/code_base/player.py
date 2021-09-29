@@ -1,8 +1,8 @@
 import pygame
 import math
 
-from surface import Surface
-from laser import Laser
+from code_base.surface import Surface
+from code_base.laser import Laser
 
 class Player(Surface):
     def __init__(self, display, position,Cavemen,Bow,sound):
