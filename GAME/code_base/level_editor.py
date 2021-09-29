@@ -5,7 +5,7 @@ from random import choice
 
 import pickle
 
-from screener import adjuster
+from setup import adjuster
 
 from tile import *
 

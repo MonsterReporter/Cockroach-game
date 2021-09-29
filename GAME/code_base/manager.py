@@ -5,9 +5,9 @@ import webbrowser as web
 
 
 
-from screener import adjuster
+from code_base.setup import adjuster
 
-from tile import *
+from code_base.tile import *
 
 from main_menu import *
 

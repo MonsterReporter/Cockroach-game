@@ -3,15 +3,15 @@ def main():
 
     import sys
     import os
-    sys.path.append(os.path.join(os.getcwd(),"code"))
+    # sys.path.append(os.path.join(os.getcwd(),"code"))
 
     # from settings import SCREEN_WIDTH, SCREEN_HEIGHT, FRAMERATE
-    import screener
-    from manager import Manager
+    from code_base import setup
+    from code_base.manager import Manager
 
     pygame.init()
 
-    SCREEN = screener.set_up_screen()
+    SCREEN = setup.set_up_screen()
     CLOCK = pygame.time.Clock()
 
     manager = Manager(SCREEN, 60)
