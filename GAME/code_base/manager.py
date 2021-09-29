@@ -29,6 +29,9 @@ class Manager:
         Adjuster = adjuster(self.SCREEN_WIDTH,self.SCREEN_HEIGHT)
         self.Adjuster = Adjuster
 
+        self.path = os.getcwd().replace("\\","/")
+        print(self.path)
+
         self.screenstates = {"game": self.game_transition,"main_menu": self.main_menu, 
             "transition": self.transition_loop,
             "level_creator" : self.level_ediotor,
@@ -97,9 +100,9 @@ class Manager:
 
         #setup muisc
         pygame.mixer.init()
-        self.main = pygame.mixer.Sound("music/main.mp3")
-        self.main3 = pygame.mixer.Sound("music/main.wav")
-        self.overworld = pygame.mixer.Sound("music/Overworld.wav")
+        self.main = pygame.mixer.Sound(f"{self.path}/music/main2.wav")
+        self.main3 = pygame.mixer.Sound(f"{self.path}/music/main.wav")
+        self.overworld = pygame.mixer.Sound(f"{self.path}/music/Overworld.wav")
         # self.walk = pygame.mixer.Sound("music/walk.wav")
         # self.walk2 = pygame.mixer.Sound("music/walk2.wav")
         # self.arrow_hit = pygame.mixer.Sound("music/arrow_hit.wav")
