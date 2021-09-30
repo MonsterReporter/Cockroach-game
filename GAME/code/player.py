@@ -41,12 +41,21 @@ class Player(Surface):
 
         #setup arrow
         self.Arrow = Bow[1]
-        self.arrow = Surface(self.surface,self.position,self.Arrow.get_width(),height = self.Arrow.get_height())
+        self.arrow = Surface(self.surface,(0,0),self.Arrow.get_width(),height = self.Arrow.get_height())
         self.arrow.original_surface.blit(self.Arrow,(0,0))
         self.arrow.update_surface()
         self.arrow.position.xy = (self.get_width() * 3 / 4 ,0)
 
         self.mouse_pressed = False
+
+        self.shoot = False
+
+        #player walk and shoot events
+        # self.SHOOT = pygame.USEREVENT + 0
+        # pygame.time.set_timer(self.SHOOT, 400)
+
+        self.WALK = pygame.USEREVENT + 0
+        pygame.time.set_timer(self.WALK, 500)
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -134,16 +143,36 @@ class Player(Surface):
             # wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
     def hold_arrow(self):
-        if self.mouse_pressed and not pygame.mouse.get_pressed()[0]:
+        # if not self.mouse_pressed and pygame.mouse.get_pressed()[0]:
+        #     pygame.event.clear(self.SHOOT)
+        #     self.mouse_pressed = True
+        #     self.arrow.draw()
+            
+            
+        # for event in pygame.event.get():
+        #     if event.type == self.SHOOT:
+        #         self.shoot = True
+
+        # if self.mouse_pressed and not pygame.mouse.get_pressed()[0] and self.shoot:
+        #     self.sound[3].play()
+        #     self.shoot = False
+        #     self.mouse_pressed = False
+        #     self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow,self.sound[2]))
+        #     self.update_surface()
+
+        if not self.mouse_pressed and pygame.mouse.get_pressed()[0]:
+            self.mouse_pressed = True
+            self.arrow.draw()
+
+        if self.mouse_pressed and pygame.mouse.get_pressed()[0] and len(self.lasers) < 1 and self.shoot:
             self.sound[3].play()
             self.mouse_pressed = False
-            self.update_surface()
+            self.shoot = False
             self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow,self.sound[2]))
-            
-        if pygame.mouse.get_pressed()[0]:
-            if not self.mouse_pressed:
-                self.arrow.draw()
-                self.mouse_pressed = True
+            self.update_surface()
+
+        if not self.shoot and not pygame.mouse.get_pressed()[0]:
+            self.shoot = True
 
 
 
@@ -159,7 +188,6 @@ class Player(Surface):
                 
 
             self.collision(walls)
-            self.sound[3].stop()
             self.hold_arrow()
 
             self.rotate()

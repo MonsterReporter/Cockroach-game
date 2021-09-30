@@ -33,7 +33,9 @@ class Manager:
             "transition": self.transition_loop,
             "level_creator" : self.level_ediotor,
             "game_loop": self.game_loop,
-            "credits" : self.credits
+            "credits" : self.credits,
+            "level_change": self.level_change,
+            "load_loading": self.load_loading,
             }
         self.screenstate = self.screenstates["main_menu"]
 
@@ -95,9 +97,13 @@ class Manager:
         self.TRANSITION = pygame.USEREVENT + 0
         pygame.time.set_timer(self.TRANSITION, 2000)
 
+        self.CHANGELEVEL = pygame.USEREVENT + 0
+        pygame.time.set_timer(self.CHANGELEVEL, 500)
+        self.change = None
+
         #setup muisc
         pygame.mixer.init()
-        self.main = pygame.mixer.Sound("music/main.mp3")
+        self.main = pygame.mixer.Sound("music/main2.wav")
         self.main3 = pygame.mixer.Sound("music/main.wav")
         self.overworld = pygame.mixer.Sound("music/Overworld.wav")
         # self.walk = pygame.mixer.Sound("music/walk.wav")
@@ -114,7 +120,7 @@ class Manager:
                 pygame.quit()
                 sys.exit()
 
-        self.Level_Importer.load()
+        self.change = self.Level_Importer.load(self.change)
         self.transition_to("game_loop")
 
     def game_loop(self):
@@ -125,7 +131,8 @@ class Manager:
             if  (pygame.key.get_pressed()[pygame.K_ESCAPE]):
                 self.transition_to("main_menu")
 
-        if self.Level_Importer.update(): self.transition_to("game")
+        if self.Level_Importer.update(): self.level_change()
+
         self.Level_Importer.draw()
 
         pygame.display.update()
@@ -290,6 +297,24 @@ class Manager:
             self.main.play(loops=100000)
         if state == "game_loop":
             self.overworld.play(loops=100000)
+
+    def load_loading(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (pygame.key.get_pressed()[pygame.K_ESCAPE]):
+                self.transition_to("main_menu")
+            if event.type == self.TRANSITION:
+                self.transition_to("game")
+
+        # self.SCREEN.fill((255,190,168))
+
+        self.Level_Importer.update()
+        self.Level_Importer.draw()
+
+        pygame.display.update()
+
+    def level_change(self):
+        pygame.event.clear(self.CHANGELEVEL)
+        self.screenstate = self.screenstates["load_loading"]
 
     def run(self):
         self.screenstate()

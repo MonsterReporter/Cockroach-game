@@ -88,7 +88,7 @@ class level_importer(Surface):
         self.Tile_Manager.remove_all_tiles()
         self.Enemy_Manager.clear()
 
-    def load(self):
+    def load(self,last_level):
 
         self.Level = {'tile':[],'player':[],'text':[],'enemies':[]}
         self.player.position.x = 100000
@@ -98,7 +98,16 @@ class level_importer(Surface):
         self.Enemy_Manager.clear()
 
         with open("levels/level_list.txt","r") as num:
-            level_name = choice(num.read().split("\n"))
+            levels = num.read()
+
+        for x in range(60):
+            level_name = choice(levels.split("\n"))
+
+            if last_level != None:
+                if last_level != level_name:
+                    print(level_name)
+                    break
+
 
         with open(f"levels/{level_name}.txt","rb") as fp:
             self.Level = pickle.load(fp)
@@ -125,6 +134,8 @@ class level_importer(Surface):
             print('error player')
 
         print("import ended")
+
+        return level_name
 
 
     def update(self):
