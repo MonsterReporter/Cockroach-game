@@ -13,6 +13,8 @@ class enemy_manager():
         self.DISPLAY_HEIGHT = display.get_height()
         self.Enemies = {"cockroach":[]}
 
+        self._cords = None
+
     def get_enemies(self,Type):
         output = []
         for enem in self.Enemies [Type]:
@@ -45,19 +47,18 @@ class enemy_manager():
         return output
 
     def update(self,walls,player):
-        cords = None
 
         for Type in list(self.Enemies.keys()):
             for enem in self.Enemies[Type]:
-                boolen ,cords = enem.update(walls,player)
-                if boolen:
+                if enem.update(walls,player):
+                    self._cords = enem.cords
                     self.Enemies[Type].pop(self.Enemies[Type].index(enem))
 
                 enem.draw()
-
-
-        return cords
-
+    @property
+    def cords(self):
+        return self._cords
+    
     def add_Enemie(self,display,Type,position,active):
         if Type == "cockroach":
             self.Enemies[Type].append(cockroach(display,position,self.Enemie1["cup"].get_size(),self.Enemie1,active))
@@ -90,16 +91,15 @@ class cockroach(Surface):
         self.sec = 2
         self.start_ticks=pygame.time.get_ticks()
 
+        self._cords = None
+
     def rotate(self):
         if self.collided:
             mx = self.turn.x
             my = self.turn.y
-            # print(self.direction)
             self.direction = -math.degrees(math.atan2(my - self.position.y, mx - self.position.x))
             self.surface = pygame.transform.rotate(self.original_surface, self.direction - 90)
             self.collided = False
-            # print(self.direction)
-            # print(self.position.xy, mx , my)
 
         else:
             self.surface = pygame.transform.rotate(self.original_surface, self.direction - 90)
@@ -140,16 +140,10 @@ class cockroach(Surface):
         self.looking.xy = (x,y)
 
         try:
-            if wall.get_rect().collidepoint(x,y):# and self.sec < (pygame.time.get_ticks()-self.start_ticks)/1000:
+            if wall.get_rect().collidepoint(x,y):
                 self.collided = True
-                # self.turn.x = self.position.x + (math.cos(self.direction) + math.radians(180))
-                # self.turn.y = self.position.y + (math.sin(self.direction) + math.radians(180))
                 self.turn.x = self.position.x + (sx * -1)
                 self.turn.y = self.position.y + (sy * -1)
-
-                # self.sec = 0.01
-                # self.start_ticks=pygame.time.get_ticks()
-                # print(self.turn.xy)
 
         except:
             pass
@@ -164,14 +158,19 @@ class cockroach(Surface):
             self.start_ticks=pygame.time.get_ticks()
             self.lasers.append(Laser(self.DISPLAY, self.position.xy, self.direction,self.sprites["projectile3"],None))
 
+    @property
+    def cords(self):
+        return self._cords
+
     def update(self,walls,player):
         if self.active:
 
-            cords = None
+            self._cords = None
 
             for laser in self.lasers:
-                boolen , cords = laser.update(walls,{"":[player]})
-                if boolen:
+                laser.update(walls,{"":[player]})
+                if laser.hit:
+                    self._cords = laser.collided
                     self.lasers.pop(self.lasers.index(laser))
                 laser.draw()
 
@@ -184,11 +183,11 @@ class cockroach(Surface):
             if self.position.x > self.DISPLAY_WIDTH or self.position.y > self.DISPLAY_HEIGHT \
                 or self.position.x < 0 or self.position.y < 0:
                 # print("gone")
-                return True , cords
+                return True
 
-            return False , cords
+            return False
 
         else:
             self.rotate()
 
-        return False , None
+        return False

@@ -1,6 +1,5 @@
 import pygame
 import math
-from pygame.locals import *
 from surface import Surface
 
 class tile_manager():
@@ -37,8 +36,14 @@ class tile_manager():
     def update(self ,player):
         if self.get_tile_amount() != 0:
             for tile in self.tiles:
-                player = tile.update(player)
-                tile.draw()
+                if not tile.get_wall(): 
+                    player = tile.update(player)
+                    tile.draw()
+
+            for tile in self.tiles:
+                if tile.get_wall(): 
+                    player = tile.update(player)
+                    tile.draw()
 
     def get_walls(self):
         output = []
@@ -46,8 +51,6 @@ class tile_manager():
             if tile.get_wall():
                 output.append(tile)
         return output
-
-        return player
 
     def get_tile_amount(self):
         return len(self.tiles)

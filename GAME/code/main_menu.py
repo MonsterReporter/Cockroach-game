@@ -1,5 +1,4 @@
 import pygame
-from pygame.locals import *
 from surface import Surface
 
 class menu_manager():

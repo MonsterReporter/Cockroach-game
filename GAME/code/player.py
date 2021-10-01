@@ -50,12 +50,7 @@ class Player(Surface):
 
         self.shoot = False
 
-        #player walk and shoot events
-        # self.SHOOT = pygame.USEREVENT + 0
-        # pygame.time.set_timer(self.SHOOT, 400)
-
-        self.WALK = pygame.USEREVENT + 0
-        pygame.time.set_timer(self.WALK, 500)
+        self._collided = None
 
     def stop_velocity_x(self):
         self.velocity.x = 0
@@ -138,27 +133,8 @@ class Player(Surface):
     def collision(self,walls):
         for wall in walls:
             wall = self.ray(wall,0,[pygame.K_w,pygame.K_s,pygame.K_a,pygame.K_d])
-            # wall = self.ray(wall,math.radians(180),[pygame.K_s,pygame.K_w,pygame.K_a,pygame.K_d])
-            # wall = self.ray(wall,- math.radians(90),[pygame.K_a,pygame.K_w,pygame.K_s,pygame.K_d])
-            # wall = self.ray(wall,math.radians(180),[pygame.K_d,pygame.K_w,pygame.K_a,pygame.K_s])
 
     def hold_arrow(self):
-        # if not self.mouse_pressed and pygame.mouse.get_pressed()[0]:
-        #     pygame.event.clear(self.SHOOT)
-        #     self.mouse_pressed = True
-        #     self.arrow.draw()
-            
-            
-        # for event in pygame.event.get():
-        #     if event.type == self.SHOOT:
-        #         self.shoot = True
-
-        # if self.mouse_pressed and not pygame.mouse.get_pressed()[0] and self.shoot:
-        #     self.sound[3].play()
-        #     self.shoot = False
-        #     self.mouse_pressed = False
-        #     self.lasers.append(Laser(self.DISPLAY, (self.position.x ,self.position.y), self.direction,self.Arrow,self.sound[2]))
-        #     self.update_surface()
 
         if not self.mouse_pressed and pygame.mouse.get_pressed()[0]:
             self.mouse_pressed = True
@@ -173,17 +149,20 @@ class Player(Surface):
 
         if not self.shoot and not pygame.mouse.get_pressed()[0]:
             self.shoot = True
-
-
+    @property
+    def cords(self):
+        return self._collided
 
     def update(self,walls = [],enemies = {}):
         if self.controlled:
             cords = None
 
+            self._collided = None
             for laser in self.lasers:
                 laser.draw()
-                boolen ,cords = laser.update(walls,enemies)
-                if boolen:
+                laser.update(walls,enemies)
+                if laser.hit:
+                    self._collided = laser.collided
                     self.lasers.pop(self.lasers.index(laser))
                 
 

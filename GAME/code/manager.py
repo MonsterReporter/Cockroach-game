@@ -58,7 +58,16 @@ class Manager:
         self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
         self.Menu_Manager.add_label(self.SCREEN ,Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
 
+        self.Credits = menu_manager()
+        self.Credits.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080* 3 / 4)) ,"back" ,self.font, "button")
+        self.Credits.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Credits" ,self.font, "label")
 
+        self.Credits.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"developers" ,self.font, "label")
+        self.Credits.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,450)) ,"catornot" ,self.font, "catornot")
+        self.Credits.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,510)) ,"Intense" ,self.font, "Intense")
+
+        self.Credits.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,600)) ,"Artist" ,self.font, "label")
+        self.Credits.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,650)) ,"MonsterReporter" ,self.font, "MonsterReporter")
 
         #import textures
         # self.Cavemen = {}
@@ -147,16 +156,6 @@ class Manager:
                 self.transition_to("level_creator") 
 
             if (pygame.key.get_pressed()[pygame.K_c]):
-                self.Menu_Manager.clear()
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080* 3 / 4)) ,"back" ,self.font, "button")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Credits" ,self.font, "label")
-
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"developers" ,self.font, "label")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,450)) ,"catornot" ,self.font, "catornot")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,510)) ,"Intense" ,self.font, "Intense")
-
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,600)) ,"Artist" ,self.font, "label")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,650)) ,"MonsterReporter" ,self.font, "MonsterReporter")
                 self.transition_to("credits")              
 
         # self.SCREEN.fill((0, 0, 0))
@@ -186,16 +185,6 @@ class Manager:
 
         try:
             if pressed["credits"]:
-                self.Menu_Manager.clear()
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,1080* 3 / 4)) ,"back" ,self.font, "button")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Credits" ,self.font, "label")
-
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"developers" ,self.font, "label")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,450)) ,"catornot" ,self.font, "catornot")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,510)) ,"Intense" ,self.font, "Intense")
-
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,600)) ,"Artist" ,self.font, "label")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,650)) ,"MonsterReporter" ,self.font, "MonsterReporter")
                 self.transition_to("credits")
         except:
             pass
@@ -206,26 +195,16 @@ class Manager:
                 pygame.quit()
                 sys.exit()
             if  (pygame.key.get_pressed()[pygame.K_ESCAPE]):
-                self.Menu_Manager.clear()
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
 
 
         self.SCREEN.fill((255,190,168))
 
-        self.Menu_Manager.update()
-        pressed = self.Menu_Manager.get_pressed()
+        self.Credits.update()
+        pressed = self.Credits.get_pressed()
 
         try:
             if pressed["button"]:
-                self.Menu_Manager.clear()
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,400)) ,"play" ,self.font, "button")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((100,1080 * 19 / 20)) ,"exit" ,self.font, "esc")
-                self.Menu_Manager.add_button(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,500)) ,"credits" ,self.font, "credits")
-                self.Menu_Manager.add_label(self.SCREEN ,self.Adjuster.get_surface_size((1920/2,300)) ,"Coakroach : forever" ,self.font, "label")
                 self.transition_to("main_menu")
         except:
             pass
